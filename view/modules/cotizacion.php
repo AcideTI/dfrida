@@ -16,12 +16,9 @@
       </h1>
     </div>
 
-
     <form role="form" method="post" class="row g-3 m-2 formNuevoIngreso">
 
-      <div class="container row g-8"
-        style="border: 3px solid #808080; padding: 3px; margin-left: 2px; ">
-
+      <div class="container row g-8" style="border: 3px solid #808080; padding: 3px; margin-left: 2px; ">
 
         <h3>Datos de la Empresa</h3>
         <!-- datos de la cotizacion -->
@@ -79,98 +76,105 @@
           <label for="dateVenci" class="form-label" style="font-weight: bold">Observaciones: </label>
           <input type="text" class="form-control" id="dateVenci" name="dateVenci">
         </div>
-        
+
       </div>
 
-
       <!-- Productos -->
-        <div class="container row g-3" style="border: 3px solid #808080; padding: 3px; margin-left: 2px; ">
-          <h3>Productos</h3>
-          <div class="d-inline-flex m-2">
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-              data-bs-target="#modalAddProdIng">Agregar Productos</button>
-          </div>
-
-          <div class="row" style="font-weight: bold">
-            <div class="col-lg-4">Descripción</div>
-            <div class="col-lg-2">Unidad</div>
-            <div class="col-lg-2">Cantidad</div>
-            <div class="col-lg-2">Precio</div>
-          </div>
-          <!-- aqui se agregan los productos del modal de prodcutos  -->
-          <div class="form-group row newProductAddIng">
-            <input type="hidden" id="listProducts" name="listProducts">
-            <!-- aqui se agregan los productos del modal de prodcutos  -->
-          </div>
-
+      <div class="container row g-3" style="border: 3px solid #808080; padding: 3px; margin-left: 2px; ">
+        <h3>Productos</h3>
+        <div class="d-inline-flex m-2">
+          <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+            data-bs-target="#modalAddProdCoti">Agregar Productos</button>
         </div>
-        <!-- Productos materia prima-->
-        <div class="container row g-3" style="border: 3px solid #808080; padding: 3px; margin-left: 2px; ">
-          <h3>Productos</h3>
-          <div class="d-inline-flex m-2">
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-              data-bs-target="#modalAddProdIng">Agregar Productos Materia Prima</button>
-          </div>
 
-          <div class="row" style="font-weight: bold">
-            <div class="col-lg-4">Descripción</div>
-            <div class="col-lg-2">Unidad</div>
-            <div class="col-lg-2">Cantidad</div>
-            <div class="col-lg-2">Precio</div>
-          </div>
-          <!-- aqui se agregan los productos del modal de prodcutos  -->
-          <div class="form-group row newProductAddIng">
-            <input type="hidden" id="listProducts" name="listProducts">
-            <!-- aqui se agregan los productos del modal de prodcutos  -->
-          </div>
-        </div><br><br><br>
+        <div class="row" style="font-weight: bold">
+          <div class="col-lg-4">Nombre</div>
+          <div class="col-lg-2">Unidad</div>
+          <div class="col-lg-2">Cantidad</div>
+          <div class="col-lg-2">Precio</div>
+        </div>
+        <!-- aqui se agregan los productos del modal de prodcutos  -->
+        <div class="form-group row AddProductoCotizacion">
+          <!-- aqui se agregan los productos selecionado del modal de prodcutos  -->
+        </div>
+      </div>
+      <!-- fin -->
 
+      <!-- Productos materia prima-->
+      <div class="container row g-3" style="border: 3px solid #808080; padding: 3px; margin-left: 2px; ">
+        <h3>Productos Materia Prima</h3>
+        <div class="d-inline-flex m-2">
+          <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+            data-bs-target="#modalAddProdMprimaCoti">Agregar Productos Materia Prima</button>
+        </div>
+
+        <div class="row" style="font-weight: bold">
+          <div class="col-lg-4">Nombre</div>
+          <div class="col-lg-2">Unidad Medida</div>
+          <div class="col-lg-2">Cantidad</div>
+          <div class="col-lg-2">Precio</div>
+        </div>
+        <!-- aqui se agregan los productos del modal de prodcutos  -->
+        <div class="form-group row AddProductoMprimaCotizacion">
+        </div>
+      </div>
+      <!-- fin -->
       <div class="container row g-3 p-3 ">
-        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-danger closeIngresoNuevo" style="margin-right: 10px;">Cerrar</button>
-        <button type="submit" class="col-2 d-inline-flex-center p-2 btn btn-success ">Registrar Ingreso</button>
+        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-danger closeIngresoNuevo"
+          style="margin-right: 10px;">Cerrar</button>
+        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-success ">Registrar Cotizacion</button>
       </div>
     </form>
   </main>
 </div>
 </div>
 
-
-
-
-<!-- Modal Add Material -->
-<div class="modal fade" id="modalAddProdIng" tabindex="-1" role="dialog" aria-labelledby="modalAddProdIng"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<!-- Modal produtos -->
+<div class="modal fade" id="modalAddProdCoti" tabindex="-1" aria-labelledby="modalAddProdCoti" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Listado de Productos</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-        </button>
+        <h1 class="modal-title fs-5" id="modalAddProdCoti">Lista Productos </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <select name="categoriaModal" id="categoriaModal" class="form-control input-lg categoriaModal">
-            <option value="">Seleccione la Categoría</option>
-
-          </select>
-        </div>
-        <table id="dataTableProducts" class="display dataTableProducts" width="100%">
+        <table id="dataTableProductos" class="display dataTableProductos">
           <thead>
-            <tr>
-              <th style="width:10px">#</th>
-              <th>Producto</th>
-              <th>Categoria</th>
-              <th>Acciones</th>
-            </tr>
+            <!-- dataTableProductos -->
           </thead>
           <tbody>
-
+            <!--dataTableProductos-->
           </tbody>
         </table>
       </div>
-
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary pull-left" data-bs-dismiss="modal">Salir</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal produtos -->
+<div class="modal fade" id="modalAddProdMprimaCoti" tabindex="-1" aria-labelledby="modalAddProdMprimaCoti"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalAddProdMprimaCoti">Lista Productos Materia Prima</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table id="dataTableProductosMprima" class="display dataTableProductosMprima">
+          <thead>
+            <!-- dataTableProductosMprima -->
+          </thead>
+          <tbody>
+            <!--dataTableProductosMprima-->
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

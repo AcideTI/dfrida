@@ -12,6 +12,7 @@ require_once "controller/products.controller.php";
 require_once "controller/categoriaProd.controller.php";
 require_once "controller/productMprima.controller.php";
 require_once "controller/categoriaProdMprima.controller.php";
+require_once "controller/cotizacion.controller.php";
 
 
 //+
@@ -26,6 +27,7 @@ require_once "model/products.model.php";
 require_once "model/categoriaProd.model.php";
 require_once "model/productMprima.model.php";
 require_once "model/categoriaProdMprima.model.php";
+require_once "model/cotizacion.model.php";
 
 //+
 

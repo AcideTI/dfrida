@@ -97,7 +97,7 @@
           <!-- Unidad -->
           <div class="form-group">
             <label for="productUnit" class="col-form-label">Unidad:</label>
-            <input type="number" class="form-control" id="productUnit" name="productUnit" required>
+            <input type="number" class="form-control" id="productUnit" name="productUnit" value="1" readonly required>
           </div>
 
           <!-- Precio -->

@@ -71,7 +71,7 @@ $_GET["ruta"] == "visualizarLote" || */
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
   crossorigin="anonymous"></script>
-<script src="js/datatables-simple-demo.js"></script>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -93,13 +93,14 @@ $_GET["ruta"] == "visualizarLote" || */
 <script src="js/categoriaProd.js"></script>
 <script src="js/productoMprima.js"></script>
 <script src="js/categoriaProdMprima.js"></script>
+<script src="js/cotizacion.js"></script>
 
 <!-- <script src="js/personal.js"></script> -->
-<script src="js/ingresos.js"></script>
-<script src="js/almacen.js"></script>
+<!-- <script src="js/ingresos.js"></script> -->
+<!-- <script src="js/almacen.js"></script> -->
 <!-- <script src="js/notaPedido.js"></script> -->
 <!-- <script src="js/lotes.js"></script> -->
-<script src="js/datatable-salidas.js"></script>
+<!-- <script src="js/datatable-salidas.js"></script> -->
 
 </body>
 
