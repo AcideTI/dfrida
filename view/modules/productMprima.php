@@ -97,7 +97,7 @@
           <!-- Unidad -->
           <div class="form-group">
             <label for="productUnitMp" class="col-form-label">Unidad:</label>
-            <input type="number" class="form-control" id="productUnitMp" name="productUnitMp" required>
+            <input type="text" class="form-control" id="productUnitMp" name="productUnitMp" placeholder="1/Metros/Uni/etc" required>
           </div>
 
           <!-- Precio -->
@@ -163,7 +163,7 @@
             <!-- Unidad -->
             <div class="form-group">
               <label for="editProductUnitMp" class="col-form-label">Unidad:</label>
-              <input type="number" class="form-control" id="editProductUnitMp" name="editProductUnitMp" required>
+              <input type="text" class="form-control" id="editProductUnitMp" name="editProductUnitMp" required>
             </div>
 
             <!-- Precio -->

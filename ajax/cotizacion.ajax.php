@@ -12,11 +12,12 @@ if (isset($_POST["todosLosProductosMprima"])) {
   $todosLosProductosMprima = new CotizacionAjax();
   $todosLosProductosMprima->ajaxDTableProductosMprima();
 }
-//  crear ProductosMprima
-if (isset($_POST["jsonCrearProductosMprima"])) {
+//  crear Cotizacion
+if (isset($_POST["jsonCrearCotizacion"], $_POST["jsonProductosCotizacion"])) {
   $create = new CotizacionAjax();
-  $create->jsonCrearProductosMprima = $_POST["jsonCrearProductosMprima"];
-  $create->ajaxCrearProductoMprima($_POST["jsonCrearProductosMprima"]);
+  $create->jsonCrearCotizacion = $_POST["jsonCrearCotizacion"];
+  $create->jsonProductosCotizacion = $_POST["jsonProductosCotizacion"];
+  $create->ajaxCrearCotizacion($_POST["jsonCrearCotizacion"], $_POST["jsonProductosCotizacion"]);
 }
 //  visualizar datos ProductosMprima
 if (isset($_POST["codProMp"])) {
@@ -63,21 +64,13 @@ class CotizacionAjax
     echo json_encode($todosLosProductosPrima);
   }
 
-  //  crear ProductosMprima
-  public function ajaxCrearProductoMprima($jsonCrearProductosMprima)
+  //  crear Cotizacion
+  public function ajaxCrearCotizacion($jsonCrearCotizacion, $jsonProductosCotizacion)
   {
-    $crearProductoMprima = json_decode($jsonCrearProductosMprima, true); // Decodificar la cadena de texto JSON en un array asociativo
-    $valoresVacios = 0;
-    foreach ($crearProductoMprima as $valor) {
-      if (empty($valor)) {
-        $valoresVacios++;
-      }
-    }
-    if ($valoresVacios > 2) {
-      echo json_encode("error");
-      return;
-    }
-    $response = CotizacionController::ctrCrearProductoMprima($crearProductoMprima);
+    $crearCotizacion = json_decode($jsonCrearCotizacion, true);
+    $crearCotizacionProductos = json_decode($jsonProductosCotizacion, true);
+
+    $response = CotizacionController::ctrCrearCotizacion($crearCotizacion, $crearCotizacionProductos);
     echo json_encode($response);
   }
   //  visualizar datos ProductosMprima
@@ -103,20 +96,20 @@ class CotizacionAjax
     echo json_encode($response);
   }
 
- //Agregar Producto a la cotizacion
+  //Agregar Producto a la cotizacion
   public function ajaxAgregarProductoCoti($codAddProdModalCoti)
   {
     $codProductoCoti = json_decode($codAddProdModalCoti, true); // Decodificar la cadena de texto JSON en un array asociativo
     $response = CotizacionController::ctrAgregarProductoCoti($codProductoCoti);
     echo json_encode($response);
   }
-   //Agregar Producto Mprima a la cotizacion
-   public function ajaxAgregarProductoMprimaCoti($codAddProdMprimaModalCoti)
-   {
-     $codProductoMprimaCoti = json_decode($codAddProdMprimaModalCoti, true); // Decodificar la cadena de texto JSON en un array asociativo
-     $response = CotizacionController::ctrAgregarProductoMprimaCoti($codProductoMprimaCoti);
-     echo json_encode($response);
-   }
+  //Agregar Producto Mprima a la cotizacion
+  public function ajaxAgregarProductoMprimaCoti($codAddProdMprimaModalCoti)
+  {
+    $codProductoMprimaCoti = json_decode($codAddProdMprimaModalCoti, true); // Decodificar la cadena de texto JSON en un array asociativo
+    $response = CotizacionController::ctrAgregarProductoMprimaCoti($codProductoMprimaCoti);
+    echo json_encode($response);
+  }
 
 }
 

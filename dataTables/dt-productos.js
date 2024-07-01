@@ -29,12 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { data: "nombreProd" },
       { data: "nombreCategoriaProd" },
       { data: "codigoProd" },
-      {
-        data: "unidadProd",
-        render: function (data, type, row) {
-          return data + " uni"; // Añade ' m²' al valor de la celda
-        },
-      },
+      { data: "unidadProd" },
       {
         data: "precioProd",
         render: function (data, type, row) {

@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <th scope="col">Nombre Producto Prima</th>
           <th scope="col">Categoria Producto Prima</th>
           <th scope="col">Codigo Producto Prima</th>
-          <th scope="col">Unidad Metros</th>
+          <th scope="col">Unidad</th>
           <th scope="col">Precio Prima</th>
           <th scope="col">Observacion</th>
           <th scope="col">Acciones</th>
@@ -29,12 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { data: "nombreMprima" },
       { data: "nombreCategoriaMprima" },
       { data: "codigoMprima" },
-      {
-        data: "unidadMprima",
-        render: function (data, type, row) {
-          return data + " m&sup2;"; // Añade ' m²' al valor de la celda
-        },
-      },
+      { data: "unidadMprima" },
       {
         data: "precioMprima",
         render: function (data, type, row) {

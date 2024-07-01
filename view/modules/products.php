@@ -97,7 +97,7 @@
           <!-- Unidad -->
           <div class="form-group">
             <label for="productUnit" class="col-form-label">Unidad:</label>
-            <input type="number" class="form-control" id="productUnit" name="productUnit" value="1" readonly required>
+            <input type="text" class="form-control" id="productUnit" name="productUnit" value="" placeholder="1/Uni/Docena/etc" required>
           </div>
 
           <!-- Precio -->
@@ -163,7 +163,7 @@
             <!-- Unidad -->
             <div class="form-group">
               <label for="editProductUnit" class="col-form-label">Unidad:</label>
-              <input type="number" class="form-control" id="editProductUnit" name="editProductUnit" required>
+              <input type="text" class="form-control" id="editProductUnit" name="editProductUnit" required>
             </div>
 
             <!-- Precio -->

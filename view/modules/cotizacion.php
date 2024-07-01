@@ -16,67 +16,75 @@
       </h1>
     </div>
 
-    <form role="form" method="post" class="row g-3 m-2 formNuevoIngreso">
+    <form role="form" method="post" class="row g-3 m-2 formNuevaCotizacio " id="formNuevaCotizacio">
 
       <div class="container row g-8" style="border: 3px solid #808080; padding: 3px; margin-left: 2px; ">
 
         <h3>Datos de la Empresa</h3>
-        <!-- datos de la cotizacion -->
+
+        <!-- datos de la cotizacion Enpresa -->
         <div class="form-group col-md-10">
-          <label for="nameRes" class="form-label" style="font-weight: bold">Titulo Cotizacion:</label>
-          <input type="text" class="form-control" id="dateProduction" name="dateProduction" required>
+          <label for="tituloCotiAdd" class="form-label" style="font-weight: bold">Titulo Cotizacion:</label>
+          <input type="text" class="form-control" id="tituloCotiAdd" name="tituloCotiAdd"
+            placeholder="Ingrese un titulo de Cotizacion">
         </div>
         <div class="col-md-2">
-          <label for="dateProduction" class="form-label" style="font-weight: bold">Fecha Cotizacion: </label>
-          <input type="date" class="form-control" id="dateProduction" name="dateProduction" required>
+          <label for="fechaCotiAdd" class="form-label" style="font-weight: bold">Fecha Cotizacion: </label>
+          <input type="date" class="form-control" id="fechaCotiAdd" name="fechaCotiAdd">
         </div><br>
 
         <div class="form-group col-md-4">
-          <label for="nameRes" class="form-label" style="font-weight: bold">Razon Social :</label>
-          <input type="text" class="form-control" id="dateProduction" name="dateProduction" required>
+          <label for="razonSocialCotiAdd" class="form-label" style="font-weight: bold">Razon Social :</label>
+          <input type="text" class="form-control" id="razonSocialCotiAdd" name="razonSocialCotiAdd"
+            placeholder="Ingrese la razon social de la empresa">
         </div>
 
         <div class="form-group col-md-4">
-          <label for="nameRes" class="form-label" style="font-weight: bold">Nombre Comercial :</label>
-          <input type="text" class="form-control" id="dateProduction" name="dateProduction" required>
+          <label for="nombreComercialCotiAdd" class="form-label" style="font-weight: bold">Nombre Comercial :</label>
+          <input type="text" class="form-control" id="nombreComercialCotiAdd" name="nombreComercialCotiAdd"
+            placeholder="Nombre comercial de la empresa">
         </div>
 
         <div class="form-group col-md-4">
-          <label for="nameRes" class="form-label" style="font-weight: bold">Ruc :</label>
-          <input type="text" class="form-control" id="dateProduction" name="dateProduction" required>
+          <label for="rucCotiAdd" class="form-label" style="font-weight: bold">Ruc :</label>
+          <input type="text" class="form-control" id="rucCotiAdd" name="rucCotiAdd"
+            placeholder="Ingrese el Ruc de la empresa">
         </div>
         <!-- fin -->
-        <!-- datos de cliente -->
+
+        <!-- datos de solicitante persona  -->
         <h3>Datos de Solicitante</h3>
 
         <div class="form-group col-md-6">
-          <label for="DescripcionIng" class="form-label" style="font-weight: bold">Nombres Solicitante:</label>
-          <input type="text" class="form-control" id="DescripcionIng" name="DescripcionIng" value=""
-            placeholder="Descripcion Ingreso">
+          <label for="nombreCotiAdd" class="form-label" style="font-weight: bold">Nombres Solicitante:</label>
+          <input type="text" class="form-control" id="nombreCotiAdd" name="nombreCotiAdd" value=""
+            placeholder="Nombre del solicitante">
         </div>
 
         <div class="form-group col-md-2">
-          <label for="DescripcionIng" class="form-label" style="font-weight: bold">Numero Celular:</label>
-          <input type="text" class="form-control" id="DescripcionIng" name="DescripcionIng" value=""
-            placeholder="Descripcion Ingreso">
+          <label for="celularCotiAdd" class="form-label" style="font-weight: bold">Numero Celular:</label>
+          <input type="text" class="form-control" id="celularCotiAdd" name="celularCotiAdd" value=""
+            placeholder="Ingrese Celular">
         </div>
 
         <div class="form-group col-md-4">
-          <label for="DescripcionIng" class="form-label" style="font-weight: bold">Correo:</label>
-          <input type="text" class="form-control" id="DescripcionIng" name="DescripcionIng" value=""
-            placeholder="Descripcion Ingreso">
+          <label for="correoCotiAdd" class="form-label" style="font-weight: bold">Correo:</label>
+          <input type="text" class="form-control" id="correoCotiAdd" name="correoCotiAdd" value=""
+            placeholder="Ingrese Correo">
         </div>
 
         <div class="col-md-4">
-          <label for="dateVenci" class="form-label" style="font-weight: bold">Direccion: </label>
-          <input type="text" class="form-control" id="dateVenci" name="dateVenci">
+          <label for="direccionCotiAdd" class="form-label" style="font-weight: bold">Direccion: </label>
+          <input type="text" class="form-control" id="direccionCotiAdd" name="direccionCotiAdd"
+            placeholder="Ingrese Direccion">
         </div>
 
         <div class="col-md-8" style="margin-bottom: 10px;">
-          <label for="dateVenci" class="form-label" style="font-weight: bold">Observaciones: </label>
-          <input type="text" class="form-control" id="dateVenci" name="dateVenci">
+          <label for="detalleCotiAdd" class="form-label" style="font-weight: bold">Observaciones: </label>
+          <input type="text" class="form-control" id="detalleCotiAdd" name="detalleCotiAdd"
+            placeholder="Ingrese observacion para la cotizacion Opcional">
         </div>
-
+        <!-- fin -->
       </div>
 
       <!-- Productos -->
@@ -91,12 +99,33 @@
           <div class="col-lg-4">Nombre</div>
           <div class="col-lg-2">Unidad</div>
           <div class="col-lg-2">Cantidad</div>
-          <div class="col-lg-2">Precio</div>
+          <div class="col-lg-2">Precio Producto</div>
         </div>
         <!-- aqui se agregan los productos del modal de prodcutos  -->
         <div class="form-group row AddProductoCotizacion">
+
           <!-- aqui se agregan los productos selecionado del modal de prodcutos  -->
         </div>
+        
+        <!-- total producto  -->
+        <div class="form-group row ">
+          <div class="form-group col-md-4">
+            <!-- vacio -->
+          </div>
+          <div class="form-group col-md-2">
+            <!-- vacio -->
+          </div>
+          <div class="form-group col-md-2">
+            <!-- vacio -->
+          </div>
+
+          <div class="form-group col-md-2">
+            <label for="totalProdCoti" class="form-label" style="font-weight: bold">Total Producto : </label>
+            <input type="text" class="form-control" id="totalProdCoti" name="totalProdCoti" value=""
+              placeholder="Total Producto Prima" readonly required>
+          </div>
+        </div>
+        <!-- fin -->
       </div>
       <!-- fin -->
 
@@ -112,17 +141,79 @@
           <div class="col-lg-4">Nombre</div>
           <div class="col-lg-2">Unidad Medida</div>
           <div class="col-lg-2">Cantidad</div>
-          <div class="col-lg-2">Precio</div>
+          <div class="col-lg-2">Precio Materia Prima</div>
         </div>
         <!-- aqui se agregan los productos del modal de prodcutos  -->
         <div class="form-group row AddProductoMprimaCotizacion">
         </div>
+        <!-- aqui se agregan los productos del modal de prodcutos  -->
+
+        <!-- fin -->
+
+        <!-- total producto materia prima -->
+        <div class="form-group row ">
+          <div class="form-group col-md-4">
+            <!-- vacio -->
+          </div>
+          <div class="form-group col-md-2">
+            <!-- vacio -->
+          </div>
+          <div class="form-group col-md-2">
+            <!-- vacio -->
+          </div>
+
+          <div class="form-group col-md-2">
+            <label for="totalProdMprimaCoti" class="form-label" style="font-weight: bold">Total Producto Prima: </label>
+            <input type="text" class="form-control" id="totalProdMprimaCoti" name="totalProdMprimaCoti" value=""
+              placeholder="Total Producto Prima" readonly required>
+          </div>
+        </div>
+        <!-- fin -->
+      </div>
+      <!-- fin -->
+
+      <!-- Calculo totales-->
+      <div class="container row g-3" style="border: 3px solid #808080; padding: 3px; margin-left: 2px; ">
+        <h3>Valores Totales Cotizacion</h3>
+
+        <div class="row" style="font-weight: bold">
+          <div class="col-lg-4"></div>
+          <div class="col-lg-2"> </div>
+          <div class="col-lg-2">IGV</div>
+          <div class="col-lg-2">Sub Total</div>
+          <div class="col-lg-2">Total S/</div>
+        </div>
+        <div class="form-group row totalCotizacion">
+          <div class="form-group col-md-2">
+            <!-- vacio -->
+          </div>
+          <div class="form-group col-md-2">
+            <!-- vacio -->
+          </div>
+          <div class="form-group col-md-2">
+            <button type="button" class="btn btn-info btnCalcularTotal" id="btnCalcularTotal">Calular Total Cotizacion
+            </button>
+          </div>
+          <div class="form-group col-md-2">
+            <input type="text" class="form-control" id="igvCotizacion" name="igvCotizacion" value="" placeholder="IGV"
+              readonly required>
+          </div>
+          <div class="form-group col-md-2">
+            <input type="text" class="form-control" id="subTotalCotizacion" name="subTotalCotizacion" value=""
+              placeholder="Sub Total Cotizacion" readonly required>
+          </div>
+          <div class="form-group col-md-2">
+            <input type="text" class="form-control" id="totalCotizacion" name="totalCotizacion" value=""
+              placeholder="Total Cotizacion" readonly required>
+          </div>
+        </div>
       </div>
       <!-- fin -->
       <div class="container row g-3 p-3 ">
-        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-danger closeIngresoNuevo"
+        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-danger"
           style="margin-right: 10px;">Cerrar</button>
-        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-success ">Registrar Cotizacion</button>
+        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-success "
+          id="btnRegistrarCotizacion">Registrar Cotizacion</button>
       </div>
     </form>
   </main>
@@ -154,7 +245,7 @@
   </div>
 </div>
 
-<!-- Modal produtos -->
+<!-- Modal produtos materia prima -->
 <div class="modal fade" id="modalAddProdMprimaCoti" tabindex="-1" aria-labelledby="modalAddProdMprimaCoti"
   aria-hidden="true">
   <div class="modal-dialog">

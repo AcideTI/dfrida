@@ -20,14 +20,15 @@ class CotizacionController
   }
 
   // Crear nuevo producto
-  public static function ctrCrearProducto($crearProducto)
+  public static function ctrCrearCotizacion($crearCotizacion,$crearCotizacionProductos)
   {
+    //crear dos funciones con self para depurara datos innessarios y crear el data array correcto 
     // Verificar si el nombre de ProductosMprima existe
     // La respuesta será true para existencia y false para no existencia
-    $existNomProd = self::ctrExistenciaDeProductoNombre($crearProducto["productName"]);
+    $existNomProd = self::ctrExistenciaDeProductoNombre($crearCotizacion["productName"]);
     // Verificar si el código de ProductosMprima existe
     // La respuesta será true para existencia y false para no existencia
-    $existCodProd = self::ctrExistenciaDeCodigoProducto($crearProducto["productCodigo"]);
+    $existCodProd = self::ctrExistenciaDeCodigoProducto($crearCotizacion["productCodigo"]);
     if ($existNomProd) {
       $response = "errorNom";
     } elseif ($existCodProd) {
@@ -35,12 +36,12 @@ class CotizacionController
     } else {
       $table = "producto";
       $dataCreate = array(
-        "idCatPro" => $crearProducto["productCategory"],
-        "nombreProd" => $crearProducto["productName"],
-        "codigoProd" => $crearProducto["productCodigo"],
-        "detalleProd" => $crearProducto["productDetail"],
-        "unidadProd" => $crearProducto["productUnit"],
-        "precioProd" => $crearProducto["productPrice"],
+        "idCatPro" => $crearCotizacion["productCategory"],
+        "nombreProd" => $crearCotizacion["productName"],
+        "codigoProd" => $crearCotizacion["productCodigo"],
+        "detalleProd" => $crearCotizacion["productDetail"],
+        "unidadProd" => $crearCotizacion["productUnit"],
+        "precioProd" => $crearCotizacion["productPrice"],
         "DateCreate" => date("Y-m-d\TH:i:sP"),
       );
       $response = CotizacionModel::CrearProducto($table, $dataCreate);
