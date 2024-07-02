@@ -87,16 +87,16 @@ class CotizacionController
       return $response;
     }
   }
-   // Eliminar cotizacion
-   public static function ctrDeleteCotizacion($borrarCotizacion)
-   {
-     $codCoti = $borrarCotizacion["codCoti"];
-       $table = "cotizacion";
-       $response = CotizacionModel::mdlDeleteCotizacion($table, $codCoti);
- 
-     return $response;
-   }
- 
+  // Eliminar cotizacion
+  public static function ctrDeleteCotizacion($borrarCotizacion)
+  {
+    $codCoti = $borrarCotizacion["codCoti"];
+    $table = "cotizacion";
+    $response = CotizacionModel::mdlDeleteCotizacion($table, $codCoti);
+
+    return $response;
+  }
+
   //Agregar Producto a la cotizacion
   public static function ctrAgregarProductoCoti($codProductoCoti)
   {
@@ -110,6 +110,16 @@ class CotizacionController
   {
     $table = 'materia_prima';
     $response = CotizacionModel::AgregarProductoMprimaCoti($table, $codProductoMprimaCoti);
+    return $response;
+  }
+
+  //  Descargar PDF de la cotizacion
+  public static function ctrDescargarPdfCotizacion($codCotiPdf)
+  {
+    $codCoti = $codCotiPdf["codCoti"];
+    $table = "cotizacion";
+    $response = CotizacionModel::mdlDescargarPdfCotizacion($table, $codCoti);
+
     return $response;
   }
 

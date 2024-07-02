@@ -5,7 +5,6 @@ require_once "conexion.php";
 class CotizacionModel
 {
   // Mostrar todas las cotizaciones
-
   public static function mdlDTableCotizaciones($table)
   {
     $statement = Conexion::conn()->prepare("SELECT idCoti, tituloCoti, nombreComercialCoti, fechaCoti, nombreCoti, celularCoti, totalCoti, estadoCoti FROM $table ORDER BY idCoti DESC");
@@ -13,7 +12,7 @@ class CotizacionModel
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
- // Crear nueva cotizacion
+  // Crear nueva cotizacion
   public static function mdlCrearCrearCotizacion($table, $dataCotizacion)
   {
     $statement = Conexion::conn()->prepare("INSERT INTO $table (tituloCoti, fechaCoti, razonSocialCoti, nombreComercialCoti, rucCoti, nombreCoti, celularCoti, correoCoti, direccionCoti, detalleCoti, productsCoti, productsMprimaCoti, totalProductsCoti, totalProductsMprimaCoti, igvCoti, subTotalCoti, totalCoti, estadoCoti, DateCreate) VALUES(:tituloCoti, :fechaCoti, :razonSocialCoti, :nombreComercialCoti, :rucCoti, :nombreCoti, :celularCoti, :correoCoti, :direccionCoti, :detalleCoti, :productsCoti, :productsMprimaCoti, :totalProductsCoti, :totalProductsMprimaCoti, :igvCoti, :subTotalCoti, :totalCoti, :estadoCoti, :DateCreate)");
@@ -87,6 +86,32 @@ class CotizacionModel
   {
     $statement = Conexion::conn()->prepare("SELECT idMprima, nombreMprima, unidadMprima, precioMprima FROM $table WHERE idMprima = :idMprima");
     $statement->bindParam(":idMprima", $codProductoMprimaCoti, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+  //  Descargar PDF de la cotizacion
+  public static function mdlDescargarPdfCotizacion($table, $codCoti)
+  {
+    $statement = Conexion::conn()->prepare("SELECT 
+    tituloCoti, 
+    fechaCoti, 
+    razonSocialCoti, 
+    nombreComercialCoti, 
+    rucCoti, 
+    nombreCoti, 
+    celularCoti, 
+    correoCoti, 
+    direccionCoti, 
+    detalleCoti, 
+    productsCoti, 
+    productsMprimaCoti, 
+    totalProductsCoti, 
+    totalProductsMprimaCoti, 
+    igvCoti, 
+    subTotalCoti, 
+    totalCoti 
+    FROM $table WHERE idCoti = :idCoti");
+    $statement->bindParam(":idCoti", $codCoti, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
   }

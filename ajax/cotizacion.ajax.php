@@ -20,12 +20,7 @@ if (isset($_POST["jsonCrearCotizacion"], $_POST["jsonProductosCotizacion"], $_PO
   $create->jsonProductosCotizacion = $_POST["jsonProductosPrimaCotizacion"];
   $create->ajaxCrearCotizacion($_POST["jsonCrearCotizacion"], $_POST["jsonProductosCotizacion"], $_POST["jsonProductosPrimaCotizacion"]);
 }
-//  visualizar datos ProductosMprima
-if (isset($_POST["codProMp"])) {
-  $view = new CotizacionAjax();
-  $view->codProMp = $_POST["codProMp"];
-  $view->ajaxViewProductoMprima($_POST["codProMp"]);
-}
+
 //editar ProductosMprima
 if (isset($_POST["jsonEditarProductosMprima"])) {
   $edit = new CotizacionAjax();
@@ -49,6 +44,13 @@ if (isset($_POST["codAddProdMprimaModalCoti"])) {
   $add = new CotizacionAjax();
   $add->codAddProdMprimaModalCoti = $_POST["codAddProdMprimaModalCoti"];
   $add->ajaxAgregarProductoMprimaCoti($_POST["codAddProdMprimaModalCoti"]);
+}
+
+//  Descargar PDF de la cotizacion
+if (isset($_POST["jsonPdfCotizacion"])) {
+  $pdf = new CotizacionAjax();
+  $pdf->jsonPdfCotizacion = $_POST["jsonPdfCotizacion"];
+  $pdf->ajaxDescargarPdfCotizacion($_POST["jsonPdfCotizacion"]);
 }
 /////////////////////////////
 
@@ -82,13 +84,13 @@ class CotizacionAjax
     $response = CotizacionController::ctrEditProductMprima($editarProductosMprima);
     echo json_encode($response);
   }
- //borrar ProductosMprima
- public function ajaxBorrarCotizacion($jsonBorraCotizacion)
- {
-   $borrarCotizacion = json_decode($jsonBorraCotizacion, true); // Decodificar la cadena de texto JSON en un array asociativo
-   $response = CotizacionController::ctrDeleteCotizacion($borrarCotizacion);
-   echo json_encode($response);
- }
+  //borrar ProductosMprima
+  public function ajaxBorrarCotizacion($jsonBorraCotizacion)
+  {
+    $borrarCotizacion = json_decode($jsonBorraCotizacion, true); // Decodificar la cadena de texto JSON en un array asociativo
+    $response = CotizacionController::ctrDeleteCotizacion($borrarCotizacion);
+    echo json_encode($response);
+  }
 
   //Agregar Producto a la cotizacion
   public function ajaxAgregarProductoCoti($codAddProdModalCoti)
@@ -105,5 +107,12 @@ class CotizacionAjax
     echo json_encode($response);
   }
 
+  //  Descargar PDF de la cotizacion
+  public function ajaxDescargarPdfCotizacion($jsonPdfCotizacion)
+  {
+    $codCotiPdf = json_decode($jsonPdfCotizacion, true); // Decodificar la cadena de texto JSON en un array asociativo
+    $response = CotizacionController::ctrDescargarPdfCotizacion($codCotiPdf);
+    echo json_encode($response);
+  }
 }
 

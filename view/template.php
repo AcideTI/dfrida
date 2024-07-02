@@ -96,6 +96,7 @@ $_GET["ruta"] == "visualizarLote" || */
 <script src="js/productoMprima.js"></script>
 <script src="js/categoriaProdMprima.js"></script>
 <script src="js/cotizacion.js"></script>
+<script src="js/pdf.js"></script>
 
 <!-- <script src="js/personal.js"></script> -->
 <!-- <script src="js/ingresos.js"></script> -->
