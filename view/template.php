@@ -31,6 +31,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == "ok") {
       $_GET["ruta"] == "products" ||
       $_GET["ruta"] == "productMprima" ||
       $_GET["ruta"] == "cotizacion" ||
+      $_GET["ruta"] == "cotizacionList" ||
       /*  $_GET["ruta"] == "ingresos" ||
     $_GET["ruta"] == "nuevoIngreso" ||
   $_GET["ruta"] == "almacen" ||
@@ -84,6 +85,7 @@ $_GET["ruta"] == "visualizarLote" || */
 <script src="dataTables/dt-categoriaProd.js"></script>
 <script src="dataTables/dt-productoMprima.js"></script>
 <script src="dataTables/dt-categoriaProdMprima.js"></script>
+<script src="dataTables/dt-cotizacion.js"></script>
 
 <!-- funciones js -->
 <script src="js/users.js"></script>

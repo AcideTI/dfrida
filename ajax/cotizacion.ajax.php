@@ -1,23 +1,24 @@
 <?php
 require_once "../controller/cotizacion.controller.php";
 require_once "../model/cotizacion.model.php";
-//require_once "../functions/cotizacion.functions.php";
+require_once "../functions/cotizacion.functions.php";
 //inicio de secion 
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 //funciones para escuchar entrada de datos desde $.ajax de jquery
-//datatable de ProductosMprima
-if (isset($_POST["todosLosProductosMprima"])) {
-  $todosLosProductosMprima = new CotizacionAjax();
-  $todosLosProductosMprima->ajaxDTableProductosMprima();
+//datatable de Cotizaciones
+if (isset($_POST["todasLasCotizaciones"])) {
+  $todasLasCotizaciones = new CotizacionAjax();
+  $todasLasCotizaciones->ajaxDTableCotizaciones();
 }
 //  crear Cotizacion
-if (isset($_POST["jsonCrearCotizacion"], $_POST["jsonProductosCotizacion"])) {
+if (isset($_POST["jsonCrearCotizacion"], $_POST["jsonProductosCotizacion"], $_POST["jsonProductosPrimaCotizacion"])) {
   $create = new CotizacionAjax();
   $create->jsonCrearCotizacion = $_POST["jsonCrearCotizacion"];
   $create->jsonProductosCotizacion = $_POST["jsonProductosCotizacion"];
-  $create->ajaxCrearCotizacion($_POST["jsonCrearCotizacion"], $_POST["jsonProductosCotizacion"]);
+  $create->jsonProductosCotizacion = $_POST["jsonProductosPrimaCotizacion"];
+  $create->ajaxCrearCotizacion($_POST["jsonCrearCotizacion"], $_POST["jsonProductosCotizacion"], $_POST["jsonProductosPrimaCotizacion"]);
 }
 //  visualizar datos ProductosMprima
 if (isset($_POST["codProMp"])) {
@@ -31,11 +32,11 @@ if (isset($_POST["jsonEditarProductosMprima"])) {
   $edit->jsonEditarProductosMprima = $_POST["jsonEditarProductosMprima"];
   $edit->ajaxEditarProductosMprima($_POST["jsonEditarProductosMprima"]);
 }
-//borrar ProductosMprima
-if (isset($_POST["jsonBorraProductoMprima"])) {
+//borrar cotizacion
+if (isset($_POST["jsonBorraCotizacion"])) {
   $delete = new CotizacionAjax();
-  $delete->jsonBorraProductoMprima = $_POST["jsonBorraProductoMprima"];
-  $delete->ajaxBorrarProductoMprima($_POST["jsonBorraProductoMprima"]);
+  $delete->jsonBorraCotizacion = $_POST["jsonBorraCotizacion"];
+  $delete->ajaxBorrarCotizacion($_POST["jsonBorraCotizacion"]);
 }
 //Agregar Producto a la cotizacion
 if (isset($_POST["codAddProdModalCoti"])) {
@@ -53,31 +54,24 @@ if (isset($_POST["codAddProdMprimaModalCoti"])) {
 
 class CotizacionAjax
 {
-  //datatable de ProductosMprima
-  public function ajaxDTableProductosMprima()
+  //datatable de cotizaciones
+  public function ajaxDTableCotizaciones()
   {
-    $todosLosProductosPrima = CotizacionController::ctrDTableProductosMprima();
-    foreach ($todosLosProductosPrima as &$productoMprima) {
-      $productoMprima['buttons'] = FunctionProductoMprima::getBtnProductosMprima($productoMprima["idMprima"]);
+    $todasLasCotizaciones = CotizacionController::ctrDTableCotizaciones();
+    foreach ($todasLasCotizaciones as &$cotizacion) {
+      $cotizacion['buttons'] = FunctionCotizacion::getBtnCotizacion($cotizacion["idCoti"]);
+      $cotizacion['estadoCoti'] = FunctionCotizacion::getEstadoCoti($cotizacion["estadoCoti"]);
     }
     //mostar todos los ProductosMprima DataTable
-    echo json_encode($todosLosProductosPrima);
+    echo json_encode($todasLasCotizaciones);
   }
 
   //  crear Cotizacion
-  public function ajaxCrearCotizacion($jsonCrearCotizacion, $jsonProductosCotizacion)
+  public function ajaxCrearCotizacion($jsonCrearCotizacion, $jsonProductosCotizacion, $jsonProductosPrimaCotizacion)
   {
     $crearCotizacion = json_decode($jsonCrearCotizacion, true);
-    $crearCotizacionProductos = json_decode($jsonProductosCotizacion, true);
 
-    $response = CotizacionController::ctrCrearCotizacion($crearCotizacion, $crearCotizacionProductos);
-    echo json_encode($response);
-  }
-  //  visualizar datos ProductosMprima
-  public function ajaxViewProductoMprima($codProMp)
-  {
-    $codProductoMp = json_decode($codProMp, true); // Decodificar la cadena de texto JSON en un array asociativo
-    $response = CotizacionController::ctrViewProductoMprima($codProductoMp);
+    $response = CotizacionController::ctrCrearCotizacion($crearCotizacion, $jsonProductosCotizacion, $jsonProductosPrimaCotizacion);
     echo json_encode($response);
   }
 
@@ -88,13 +82,13 @@ class CotizacionAjax
     $response = CotizacionController::ctrEditProductMprima($editarProductosMprima);
     echo json_encode($response);
   }
-  //borrar ProductosMprima
-  public function ajaxBorrarProductoMprima($jsonBorraProductoMprima)
-  {
-    $borrarProductoMprima = json_decode($jsonBorraProductoMprima, true); // Decodificar la cadena de texto JSON en un array asociativo
-    $response = CotizacionController::ctrDeleteProductMprima($borrarProductoMprima);
-    echo json_encode($response);
-  }
+ //borrar ProductosMprima
+ public function ajaxBorrarCotizacion($jsonBorraCotizacion)
+ {
+   $borrarCotizacion = json_decode($jsonBorraCotizacion, true); // Decodificar la cadena de texto JSON en un array asociativo
+   $response = CotizacionController::ctrDeleteCotizacion($borrarCotizacion);
+   echo json_encode($response);
+ }
 
   //Agregar Producto a la cotizacion
   public function ajaxAgregarProductoCoti($codAddProdModalCoti)

@@ -247,35 +247,35 @@ document.addEventListener("DOMContentLoaded", function () {
           totalProductosPrima += precio;
         });
 
-        // Asignar el totalProducto al input de totalProdCoti y actualizar el atributo 'value'
-        $("#totalProdCoti")
+        // Asignar el totalProducto al input de totalProdCotiAdd y actualizar el atributo 'value'
+        $("#totalProdCotiAdd")
           .val(totalProductos.toFixed(2))
           .attr("value", totalProductos.toFixed(2));
 
-        // Asignar el totalProductoMprima al input de totalProdMprimaCoti y actualizar el atributo 'value'
-        $("#totalProdMprimaCoti")
+        // Asignar el totalProductoMprima al input de totalProdMprimaCotiAdd y actualizar el atributo 'value'
+        $("#totalProdMprimaCotiAdd")
           .val(totalProductosPrima.toFixed(2))
           .attr("value", totalProductosPrima.toFixed(2));
 
         // Calcular el total general
         const totalGeneral = totalProductos + totalProductosPrima;
 
-        // Asignar el totalGeneral al input de subTotalCotizacion y actualizar el atributo 'value'
-        $("#subTotalCotizacion")
+        // Asignar el totalGeneral al input de subTotalCotizacionAdd y actualizar el atributo 'value'
+        $("#subTotalCotizacionAdd")
           .val(totalGeneral.toFixed(2))
           .attr("value", totalGeneral.toFixed(2));
 
-        // Asignar un valor estático de 0 a igvCotizacion y actualizar el atributo 'value'
-        $("#igvCotizacion").val(0).attr("value", 0);
+        // Asignar un valor estático de 0 a igvCotizacionAdd y actualizar el atributo 'value'
+        $("#igvCotizacionAdd").val(0).attr("value", 0);
 
-        // Calcular el totalCotizacion como la suma de totalGeneral + igvCotizacion
-        const igvCotizacion = parseFloat($("#igvCotizacion").val()) || 0;
-        const totalCotizacion = totalGeneral + igvCotizacion;
+        // Calcular el totalCotizacion como la suma de totalGeneral + igvCotizacionAdd
+        const igvCotizacionAdd = parseFloat($("#igvCotizacionAdd").val()) || 0;
+        const totalCotizacionAdd = totalGeneral + igvCotizacionAdd;
 
         // Asignar el totalCotizacion al input de totalCotizacion y actualizar el atributo 'value'
-        $("#totalCotizacion")
-          .val(totalCotizacion.toFixed(2))
-          .attr("value", totalCotizacion.toFixed(2));
+        $("#totalCotizacionAdd")
+          .val(totalCotizacionAdd.toFixed(2))
+          .attr("value", totalCotizacionAdd.toFixed(2));
       }
 
       //botón para calcular el total
@@ -298,11 +298,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnRegistrar = document.getElementById("btnRegistrarCotizacion"); // Selecciona el botón "Registrar Cotizacion"
     btnRegistrar.addEventListener("click", function () {
       let camposRequeridos = [
-        //{ id: "igvCotizacion", nombre: "IGV Cotización" },
-        { id: "subTotalCotizacion", nombre: "Sub Total Cotización" },
-        { id: "totalProdCoti", nombre: "Total Producto" },
-        { id: "totalProdMprimaCoti", nombre: "Total Producto Prima" },
-        { id: "totalCotizacion", nombre: "Total Cotización" },
+        //{ id: "igvCotizacionAdd", nombre: "IGV Cotización" },
+        { id: "tituloCotiAdd", nombre: "Titulo cotizacion" },
+        { id: "fechaCotiAdd", nombre: "Fecha cotizacion" },
+        { id: "nombreCotiAdd", nombre: "Nombre Solicitante" },
+        { id: "subTotalCotizacionAdd", nombre: "Sub Total Cotización" },
+        { id: "totalProdCotiAdd", nombre: "Total Producto" },
+        { id: "totalProdMprimaCotiAdd", nombre: "Total Producto Prima" },
+        { id: "totalCotizacionAdd", nombre: "Total Cotización" },
       ];
       let formularioValido = true;
       //verificar que los campos de total cotizacion no esten vacios
@@ -334,6 +337,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Simula la pulsación del botón "btnCalcularTotal" para asegurar que los totales estén actualizados si el usuario no lo hizo
         document.getElementById("btnCalcularTotal").click();
         /* fin click calcular total */
+        //recolectar los datos del formulario principal
         var formulario = document.getElementById("formNuevaCotizacio");
         var datosFormulario = {};
         var elementosFormulario = formulario.querySelectorAll("input, select");
@@ -344,17 +348,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         // Crear un JSON con los datos recolectados del formulario principal
         var jsonCrearCotizacion = JSON.stringify(datosFormulario);
-        //console.log(jsonCrearCotizacion);
 
         // Llamada a la función para recolectar datos de formularios anidados PRODUCTOS y PRODUCTOS PRIMA
         recojerFormulariosAnidadosProductosYprima(function (
-          datosFormulariosProductosyPrima
+          datosFormulariosProductos,
+          datosFormulariosProductosPrima
         ) {
           // Crear un JSON con los datos recolectados de los formularios anidados
           var jsonProductosCotizacion = JSON.stringify(
-            datosFormulariosProductosyPrima
+            datosFormulariosProductos
           );
-          //console.log(jsonProductosCotizacion);
+          var jsonProductosPrimaCotizacion = JSON.stringify(
+            datosFormulariosProductosPrima
+          );
 
           $.ajax({
             url: "ajax/cotizacion.ajax.php",
@@ -363,6 +369,7 @@ document.addEventListener("DOMContentLoaded", function () {
             data: {
               jsonCrearCotizacion: jsonCrearCotizacion,
               jsonProductosCotizacion: jsonProductosCotizacion,
+              jsonProductosPrimaCotizacion: jsonProductosPrimaCotizacion,
             },
             dataType: "json",
             success: function (response) {
@@ -379,31 +386,48 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                   icon: "success",
                   title: "Correcto",
-                  html: "<strong>Cotizacion Creada Corectamente</strong>",
+                  html: "Cotización Creada Correctamente <strong>¿Desea Crear Otra?</strong> ",
+                  showCancelButton: true,
+                  confirmButtonText: "Si",
+                  cancelButtonText: "No",
                 }).then(function (result) {
                   if (result.value) {
                     limpiarURL(); // Llamar a la función para limpiar la URL
                     window.location.reload(); // Recargar la página
+                  } else {
+                    window.location.href = "/dfrida/cotizacionList"; // Redirigir a la vista de cotizacionList
                   }
                 });
-              } else if (response == "errorNom") {
+              } else if (response == "error0") {
                 Swal.fire({
                   icon: "error",
                   title: "Error",
-                  html: "<strong>La cotizacion ya existe </strong>.",
+                  html: "La cotización ya existe <strong>¿Desea Crear Otra?</strong>.",
+                  showCancelButton: true,
+                  confirmButtonText: "Si",
+                  cancelButtonText: "No",
                 }).then(function (result) {
                   if (result.value) {
                     limpiarURL(); // Llamar a la función para limpiar la URL
+                    window.location.reload(); // Recargar la página
+                  } else {
+                    window.location.href = "/dfrida/cotizacionList"; // Redirigir a la vista de cotizacionList
                   }
                 });
               } else {
                 Swal.fire({
                   icon: "error",
                   title: "Error",
-                  html: "<strong>No se pudo crear la cotizacion </strong>.",
+                  html: "No se pudo crear la cotización <strong>¿Desea Crear Otra?</strong>.",
+                  showCancelButton: true,
+                  confirmButtonText: "Si",
+                  cancelButtonText: "No",
                 }).then(function (result) {
                   if (result.value) {
                     limpiarURL(); // Llamar a la función para limpiar la URL
+                    window.location.reload(); // Recargar la página
+                  } else {
+                    window.location.href = "/dfrida/cotizacionList"; // Redirigir a la vista de cotizacionList
                   }
                 });
               }
@@ -418,41 +442,43 @@ document.addEventListener("DOMContentLoaded", function () {
           });
           // Fin de la llamada AJAX
         });
+
         //funcion para recolectar los datos de los formularios productos y productos prima
         function recojerFormulariosAnidadosProductosYprima(callback) {
-          let datosFormulariosProductosyPrima = {
-            totalProductos: {},
-            totalProductosPrima: {},
-          };
-          //productos
+          //alamcena los datos de los formularios productos y productos prima
+          let datosFormulariosProductos = {};
+          let datosFormulariosProductosPrima = {};
+
+          // Recorrer los formularios de productos
           $("[id^=formularioProdCoti]").each(function (index) {
             let datosFormulario = {};
-            var elementosFormulario = $(this).find("input, select");
-            elementosFormulario.each(function () {
-              if (this.id) {
-                datosFormulario[this.id] = $(this).val();
-              }
-            });
-            datosFormulariosProductosyPrima.totalProductos["producto" + index] =
-              datosFormulario;
-          });
-          //productos prima
-          $("[id^=formularioProdMprimaCoti]").each(function (index) {
-            let datosFormulario = {};
-            var elementosFormulario = $(this).find("input, select");
-            elementosFormulario.each(function () {
-              if (this.id) {
-                datosFormulario[this.id] = $(this).val();
-              }
-            });
-            datosFormulariosProductosyPrima.totalProductosPrima[
-              "productoPrima" + index
-            ] = datosFormulario;
+            $(this)
+              .find("input, select")
+              .each(function () {
+                if (this.id) {
+                  datosFormulario[this.id] = $(this).val();
+                }
+              });
+            datosFormulariosProductos["producto" + index] = datosFormulario;
           });
 
-          // Llamar al callback con los datos recolectados
+          // Recorrer los formularios de productos prima
+          $("[id^=formularioProdMprimaCoti]").each(function (index) {
+            let datosFormulario = {};
+            $(this)
+              .find("input, select")
+              .each(function () {
+                if (this.id) {
+                  datosFormulario[this.id] = $(this).val();
+                }
+              });
+            datosFormulariosProductosPrima["productoPrima" + index] =
+              datosFormulario;
+          });
+
+          // Llamar al callback con los datos recolectados de ambos formularios
           if (callback && typeof callback === "function") {
-            callback(datosFormulariosProductosyPrima);
+            callback(datosFormulariosProductos, datosFormulariosProductosPrima);
           }
         }
         //fin agregar productos a la cotizacion
@@ -559,44 +585,44 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-//fin
-// eliminar ProductosMprima
+//fin */
+// eliminar Cotizacion
 document.addEventListener("DOMContentLoaded", function () {
   var currentPath = window.location.pathname;
-  var appPath = "/dfrida/cotizacion";
+  var appPath = "/dfrida/cotizacionList";
   if (currentPath == appPath) {
-    $(".dataTableProductosMprima").on(
+    $(".dataTableCotizaciones").on(
       "click",
-      ".btnDeleteProductoMprima",
+      ".btnDeleteCotizacion",
       function () {
-        var codProMp = $(this).attr("codProMp");
+        var codCoti = $(this).attr("codCoti");
         //mensaje de confirmación para eliminar ProductosMprima
         swal
           .fire({
-            title: "¿Está seguro de borrar el Producto Prima?",
+            title: "¿Está seguro de borrar la Cotizacion ?",
             text: "¡No podrá revertir el cambio!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             cancelButtonText: "Cancelar",
-            confirmButtonText: "Si, borrar Producto!",
+            confirmButtonText: "Si, borrar Cotizacion!",
           })
           .then((result) => {
             if (result.isConfirmed) {
-              var jsonBorraProductoMprima = JSON.stringify({
-                codProMp: codProMp,
+              var jsonBorraCotizacion = JSON.stringify({
+                codCoti: codCoti,
               });
               $.ajax({
-                url: "ajax/productMprima.ajax.php",
+                url: "ajax/cotizacion.ajax.php",
                 method: "POST",
-                data: { jsonBorraProductoMprima: jsonBorraProductoMprima },
+                data: { jsonBorraCotizacion: jsonBorraCotizacion },
                 dataType: "json",
                 success: function (response) {
                   if (response == "ok") {
                     Swal.fire(
                       "Correcto",
-                      "Producto Prima eliminado correctamente",
+                      "Cotizacion eliminada correctamente",
                       "success"
                     ).then(function () {
                       window.location.reload(); // Recargar la página
@@ -604,7 +630,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   } else {
                     Swal.fire(
                       "Error",
-                      "El Producto Prima se encuentra en el inventario no se puede eliminar",
+                      "La Cotizacion no se puede eliminar",
                       "error"
                     ).then(function () {
                       //window.location.reload(); // Recargar la página
@@ -626,4 +652,29 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 //fin eliminar ProductosMprima
- */
+document.addEventListener("DOMContentLoaded", function () {
+  //si la ruta no es la correcta no se ejecuta la función
+  var currentPath = window.location.pathname;
+  var appPath = "/dfrida/cotizacionList";
+  if (currentPath == appPath) {
+    var btn = document.getElementById("btnAddCotizacion");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        window.location.href = "/dfrida/cotizacion";
+      });
+    }
+  }
+});
+document.addEventListener("DOMContentLoaded", function () {
+  //si la ruta no es la correcta no se ejecuta la función
+  var currentPath = window.location.pathname;
+  var appPath = "/dfrida/cotizacion";
+  if (currentPath == appPath) {
+    var btn = document.getElementById("btnCerrarCotizacion");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        window.location.href = "/dfrida/cotizacionList";
+      });
+    }
+  }
+});

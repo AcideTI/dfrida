@@ -128,6 +128,8 @@ CREATE TABLE
     `detalleCoti` varchar(255) DEFAULT NULL,
     `productsCoti` JSON NOT NULL,
     `productsMprimaCoti` JSON NOT NULL,
+    `totalProductsCoti` decimal(10, 2) NOT NULL,
+    `totalProductsMprimaCoti` decimal(10, 2) NOT NULL,
     `igvCoti` decimal(10, 2) NOT NULL,
     `subTotalCoti` decimal(10, 2) NOT NULL,
     `totalCoti` decimal(10, 2) NOT NULL,

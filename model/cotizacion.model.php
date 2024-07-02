@@ -4,68 +4,45 @@ require_once "conexion.php";
 
 class CotizacionModel
 {
-  // Mostrar todos los productos
+  // Mostrar todas las cotizaciones
 
-  public static function mdlDTableProductos($table)
+  public static function mdlDTableCotizaciones($table)
   {
-    $statement = Conexion::conn()->prepare("SELECT producto.idProd, producto.idCatPro, producto.codigoProd, producto.nombreProd, producto.detalleProd, producto.unidadProd, producto.precioProd, categoria_prod.nombreCategoriaProd FROM $table INNER JOIN categoria_prod ON producto.idCatPro = categoria_prod.idCatPro ORDER BY producto.idProd DESC");
+    $statement = Conexion::conn()->prepare("SELECT idCoti, tituloCoti, nombreComercialCoti, fechaCoti, nombreCoti, celularCoti, totalCoti, estadoCoti FROM $table ORDER BY idCoti DESC");
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  // Mostrar todas las categorías de productos
-  public static function mdlGetAllCategories($table)
+ // Crear nueva cotizacion
+  public static function mdlCrearCrearCotizacion($table, $dataCotizacion)
   {
-    $statement = Conexion::conn()->prepare("SELECT idCatPro, nombreCategoriaProd FROM $table ORDER BY idCatPro DESC");
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
-  }
+    $statement = Conexion::conn()->prepare("INSERT INTO $table (tituloCoti, fechaCoti, razonSocialCoti, nombreComercialCoti, rucCoti, nombreCoti, celularCoti, correoCoti, direccionCoti, detalleCoti, productsCoti, productsMprimaCoti, totalProductsCoti, totalProductsMprimaCoti, igvCoti, subTotalCoti, totalCoti, estadoCoti, DateCreate) VALUES(:tituloCoti, :fechaCoti, :razonSocialCoti, :nombreComercialCoti, :rucCoti, :nombreCoti, :celularCoti, :correoCoti, :direccionCoti, :detalleCoti, :productsCoti, :productsMprimaCoti, :totalProductsCoti, :totalProductsMprimaCoti, :igvCoti, :subTotalCoti, :totalCoti, :estadoCoti, :DateCreate)");
 
-  // Crear nuevo producto
-  public static function CrearProducto($table, $dataCreate)
-  {
-    $statement = Conexion::conn()->prepare("INSERT INTO $table (idCatPro, nombreProd, codigoProd, detalleProd, unidadProd, precioProd, DateCreate) VALUES(:idCatPro, :nombreProd, :codigoProd, :detalleProd, :unidadProd, :precioProd, :DateCreate)");
-    $statement->bindParam(":idCatPro", $dataCreate["idCatPro"], PDO::PARAM_INT);
-    $statement->bindParam(":nombreProd", $dataCreate["nombreProd"], PDO::PARAM_STR);
-    $statement->bindParam(":codigoProd", $dataCreate["codigoProd"], PDO::PARAM_STR);
-    $statement->bindParam(":detalleProd", $dataCreate["detalleProd"], PDO::PARAM_STR);
-    $statement->bindParam(":unidadProd", $dataCreate["unidadProd"], PDO::PARAM_STR);
-    $statement->bindParam(":precioProd", $dataCreate["precioProd"], PDO::PARAM_STR);
-    $statement->bindParam(":DateCreate", $dataCreate["DateCreate"], PDO::PARAM_STR);
+    $statement->bindParam(":tituloCoti", $dataCotizacion["tituloCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":fechaCoti", $dataCotizacion["fechaCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":razonSocialCoti", $dataCotizacion["razonSocialCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":nombreComercialCoti", $dataCotizacion["nombreComercialCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":rucCoti", $dataCotizacion["rucCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":nombreCoti", $dataCotizacion["nombreCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":celularCoti", $dataCotizacion["celularCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":correoCoti", $dataCotizacion["correoCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":direccionCoti", $dataCotizacion["direccionCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":detalleCoti", $dataCotizacion["detalleCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":productsCoti", $dataCotizacion["productsCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":productsMprimaCoti", $dataCotizacion["productsMprimaCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":totalProductsCoti", $dataCotizacion["totalProductsCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":totalProductsMprimaCoti", $dataCotizacion["totalProductsMprimaCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":igvCoti", $dataCotizacion["igvCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":subTotalCoti", $dataCotizacion["subTotalCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":totalCoti", $dataCotizacion["totalCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":estadoCoti", $dataCotizacion["estadoCoti"], PDO::PARAM_STR);
+    $statement->bindParam(":DateCreate", $dataCotizacion["DateCreate"], PDO::PARAM_STR);
 
     if ($statement->execute()) {
       return "ok";
     } else {
       return "error";
     }
-  }
-
-  //verificar si el nombre de ProductosMprima existe
-  public static function mdlExistenciaDeProductoNombre($table, $productName)
-  {
-    $statement = Conexion::conn()->prepare("SELECT nombreProd FROM $table WHERE nombreProd = :nombreProd");
-    $statement->bindParam(":nombreProd", $productName, PDO::PARAM_STR);
-    $statement->execute();
-    $resultado = $statement->fetch(PDO::FETCH_ASSOC);
-    return $resultado ? true : false;
-  }
-  //verificar si el codigo de ProductosMprima existe
-  public static function mdlExistenciaDeCodigoProducto($table, $productCodigo)
-  {
-    $statement = Conexion::conn()->prepare("SELECT codigoProd FROM $table WHERE codigoProd = :codigoProd");
-    $statement->bindParam(":codigoProd", $productCodigo, PDO::PARAM_STR);
-    $statement->execute();
-    $resultado = $statement->fetch(PDO::FETCH_ASSOC);
-    return $resultado ? true : false;
-  }
-
-  //  visualizar datos Producto
-  public static function mdlViewProducto($table, $codProduct)
-  {
-    $statement = Conexion::conn()->prepare("SELECT producto.idProd, producto.idCatPro, producto.codigoProd, producto.nombreProd, producto.detalleProd, producto.unidadProd, producto.precioProd, categoria_prod.nombreCategoriaProd FROM $table INNER JOIN categoria_prod ON producto.idCatPro = categoria_prod.idCatPro WHERE producto.idProd = :idProd");
-    $statement->bindParam(":idProd", $codProduct, PDO::PARAM_INT);
-    $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);
   }
 
   // Editar un producto específico
@@ -87,25 +64,10 @@ class CotizacionModel
     }
   }
 
-  // Mostrar todas las categorías de productos modal
-  public static function mdlGetAllCategoriesView($table)
+  //  Borrar cotizacion
+  public static function mdlDeleteCotizacion($table, $codCoti)
   {
-    $statement = Conexion::conn()->prepare("SELECT idCatPro, nombreCategoriaProd FROM $table ORDER BY idCatPro DESC");
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
-  }
-
-  //verificar si el producto esta en alamacen
-  public static function mdlAlamacenProductStock($table, $codProduct)
-  {
-    $statement = Conexion::conn()->prepare("SELECT cantidadProd FROM $table WHERE idProd = $codProduct");
-    return $statement->fetch();
-  }
-
-  //  Borrar un producto específico
-  public static function mdlDeleteProduct($table, $codProduct)
-  {
-    $statement = Conexion::conn()->prepare("DELETE FROM $table WHERE idProd = $codProduct");
+    $statement = Conexion::conn()->prepare("DELETE FROM $table WHERE idCoti = $codCoti");
     if ($statement->execute()) {
       return "ok";
     } else {

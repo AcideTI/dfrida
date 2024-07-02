@@ -47,7 +47,7 @@
 
         <div class="form-group col-md-4">
           <label for="rucCotiAdd" class="form-label" style="font-weight: bold">Ruc :</label>
-          <input type="text" class="form-control" id="rucCotiAdd" name="rucCotiAdd"
+          <input type="number" class="form-control" id="rucCotiAdd" name="rucCotiAdd"
             placeholder="Ingrese el Ruc de la empresa">
         </div>
         <!-- fin -->
@@ -63,7 +63,7 @@
 
         <div class="form-group col-md-2">
           <label for="celularCotiAdd" class="form-label" style="font-weight: bold">Numero Celular:</label>
-          <input type="text" class="form-control" id="celularCotiAdd" name="celularCotiAdd" value=""
+          <input type="number" class="form-control" id="celularCotiAdd" name="celularCotiAdd" value=""
             placeholder="Ingrese Celular">
         </div>
 
@@ -120,8 +120,8 @@
           </div>
 
           <div class="form-group col-md-2">
-            <label for="totalProdCoti" class="form-label" style="font-weight: bold">Total Producto : </label>
-            <input type="text" class="form-control" id="totalProdCoti" name="totalProdCoti" value=""
+            <label for="totalProdCotiAdd" class="form-label" style="font-weight: bold">Total Producto : </label>
+            <input type="text" class="form-control" id="totalProdCotiAdd" name="totalProdCotiAdd" value=""
               placeholder="Total Producto Prima" readonly required>
           </div>
         </div>
@@ -163,8 +163,8 @@
           </div>
 
           <div class="form-group col-md-2">
-            <label for="totalProdMprimaCoti" class="form-label" style="font-weight: bold">Total Producto Prima: </label>
-            <input type="text" class="form-control" id="totalProdMprimaCoti" name="totalProdMprimaCoti" value=""
+            <label for="totalProdMprimaCotiAdd" class="form-label" style="font-weight: bold">Total Producto Prima: </label>
+            <input type="text" class="form-control" id="totalProdMprimaCotiAdd" name="totalProdMprimaCotiAdd" value=""
               placeholder="Total Producto Prima" readonly required>
           </div>
         </div>
@@ -195,15 +195,15 @@
             </button>
           </div>
           <div class="form-group col-md-2">
-            <input type="text" class="form-control" id="igvCotizacion" name="igvCotizacion" value="" placeholder="IGV"
+            <input type="text" class="form-control" id="igvCotizacionAdd" name="igvCotizacionAdd" value="" placeholder="IGV"
               readonly required>
           </div>
           <div class="form-group col-md-2">
-            <input type="text" class="form-control" id="subTotalCotizacion" name="subTotalCotizacion" value=""
+            <input type="text" class="form-control" id="subTotalCotizacionAdd" name="subTotalCotizacionAdd" value=""
               placeholder="Sub Total Cotizacion" readonly required>
           </div>
           <div class="form-group col-md-2">
-            <input type="text" class="form-control" id="totalCotizacion" name="totalCotizacion" value=""
+            <input type="text" class="form-control" id="totalCotizacionAdd" name="totalCotizacionAdd" value=""
               placeholder="Total Cotizacion" readonly required>
           </div>
         </div>
@@ -211,7 +211,7 @@
       <!-- fin -->
       <div class="container row g-3 p-3 ">
         <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-danger"
-          style="margin-right: 10px;">Cerrar</button>
+          style="margin-right: 10px;" id="btnCerrarCotizacion">Cerrar</button>
         <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-success "
           id="btnRegistrarCotizacion">Registrar Cotizacion</button>
       </div>

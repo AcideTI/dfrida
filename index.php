@@ -41,6 +41,7 @@ require_once "functions/productos.functions.php";
 require_once "functions/categoriaProd.functions.php";
 require_once "functions/productoMprima.functions.php";
 require_once "functions/categoriaProdMprima.functions.php";
+require_once "functions/cotizacion.functions.php";
 
 //+
 $template = new TemplateController();

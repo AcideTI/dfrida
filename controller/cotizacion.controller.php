@@ -4,74 +4,68 @@ date_default_timezone_set('America/Bogota');
 class CotizacionController
 {
   // Mostrar todos los productos
-  public static function ctrDTableProductos()
+  public static function ctrDTableCotizaciones()
   {
-    $table = "producto";
-    $response = CotizacionModel::mdlDTableProductos($table);
+    $table = "cotizacion";
+    $response = CotizacionModel::mdlDTableCotizaciones($table);
     return $response;
   }
 
-  // Mostrar todas las categorías de productos
-  public static function ctrGetAllCategories()
+  // Crear nueva cotizacion
+  public static function ctrCrearCotizacion($crearCotizacion, $jsonProductosCotizacion, $jsonProductosPrimaCotizacion)
   {
-    $table = "categoria_prod";
-    $response = CotizacionModel::mdlGetAllCategories($table);
-    return $response;
-  }
+    // Eliminar datos innecesarios
+    $cotizacionData = self::ctrBorrarDatosInecesarios($crearCotizacion);
+    // Eliminar el array $crearCotizacion para no duplicar datos
+    unset($crearCotizacion);
 
-  // Crear nuevo producto
-  public static function ctrCrearCotizacion($crearCotizacion,$crearCotizacionProductos)
-  {
-    //crear dos funciones con self para depurara datos innessarios y crear el data array correcto 
-    // Verificar si el nombre de ProductosMprima existe
-    // La respuesta será true para existencia y false para no existencia
-    $existNomProd = self::ctrExistenciaDeProductoNombre($crearCotizacion["productName"]);
-    // Verificar si el código de ProductosMprima existe
-    // La respuesta será true para existencia y false para no existencia
-    $existCodProd = self::ctrExistenciaDeCodigoProducto($crearCotizacion["productCodigo"]);
-    if ($existNomProd) {
-      $response = "errorNom";
-    } elseif ($existCodProd) {
-      $response = "errorCod";
-    } else {
-      $table = "producto";
-      $dataCreate = array(
-        "idCatPro" => $crearCotizacion["productCategory"],
-        "nombreProd" => $crearCotizacion["productName"],
-        "codigoProd" => $crearCotizacion["productCodigo"],
-        "detalleProd" => $crearCotizacion["productDetail"],
-        "unidadProd" => $crearCotizacion["productUnit"],
-        "precioProd" => $crearCotizacion["productPrice"],
-        "DateCreate" => date("Y-m-d\TH:i:sP"),
-      );
-      $response = CotizacionModel::CrearProducto($table, $dataCreate);
-    }
+    $table = "cotizacion";
+    $dataCreate = array(
+      "tituloCoti" => $cotizacionData["tituloCotiAdd"],
+      "fechaCoti" => $cotizacionData["fechaCotiAdd"],
+      "razonSocialCoti" => $cotizacionData["razonSocialCotiAdd"],
+      "nombreComercialCoti" => $cotizacionData["nombreComercialCotiAdd"],
+      "rucCoti" => $cotizacionData["rucCotiAdd"],
+      "nombreCoti" => $cotizacionData["nombreCotiAdd"],
+      "celularCoti" => $cotizacionData["celularCotiAdd"],
+      "correoCoti" => $cotizacionData["correoCotiAdd"],
+      "direccionCoti" => $cotizacionData["direccionCotiAdd"],
+      "detalleCoti" => $cotizacionData["detalleCotiAdd"],
+      "productsCoti" => $jsonProductosCotizacion,
+      "productsMprimaCoti" => $jsonProductosPrimaCotizacion,
+      "totalProductsCoti" => $cotizacionData["totalProdCotiAdd"],
+      "totalProductsMprimaCoti" => $cotizacionData["totalProdMprimaCotiAdd"],
+      "igvCoti" => $cotizacionData["igvCotizacionAdd"],
+      "subTotalCoti" => $cotizacionData["subTotalCotizacionAdd"],
+      "totalCoti" => $cotizacionData["totalCotizacionAdd"],
+      "estadoCoti" => 1,
+      "DateCreate" => date("Y-m-d\TH:i:sP"),
+    );
+    $response = CotizacionModel::mdlCrearCrearCotizacion($table, $dataCreate);
+
     return $response;
   }
   //verificar si el nombre de Producto existe
-  public static function ctrExistenciaDeProductoNombre($productName)
+  public static function ctrBorrarDatosInecesarios($crearCotizacion)
   {
-    $table = "producto";
-    //la respues sera true para existencia y false para no existencia
-    $response = CotizacionModel::mdlExistenciaDeProductoNombre($table, $productName);
-    return $response;
-  }
-  //verificar si el codigo de Producto existe
-  public static function ctrExistenciaDeCodigoProducto($productCodigo)
-  {
-    $table = "producto";
-    //la respues sera true para existencia y false para no existencia
-    $response = CotizacionModel::mdlExistenciaDeCodigoProducto($table, $productCodigo);
+    //datos recolectados por la primera funcion de recoleccion de datos 
+    //datos repetidos incesarios y sin estructura
+    //datos del primer producto  ubicado por la funcion
+    unset($crearCotizacion["codProdCoti"]);
+    unset($crearCotizacion["nombreProdCoti"]);
+    unset($crearCotizacion["unidadProdCoti"]);
+    unset($crearCotizacion["cantidadProdCoti"]);
+    unset($crearCotizacion["precioProdCoti"]);
+    //datos del primer producto prima ubicado por la funcion
+    unset($crearCotizacion["codProdMprimaCoti"]);
+    unset($crearCotizacion["nombreProdMprimaCoti"]);
+    unset($crearCotizacion["unidadProdMprimaCoti"]);
+    unset($crearCotizacion["cantidadProdMprimaCoti"]);
+    unset($crearCotizacion["precioProdMprimaCoti"]);
+    $response = $crearCotizacion;
     return $response;
   }
 
-  //  visualizar datos Producto
-  public static function ctrViewProducto($codProduct)
-  {
-    $table = 'producto';
-    $productData = CotizacionModel::mdlViewProducto($table, $codProduct);
-    return $productData;
-  }
 
   // Editar un producto específico
   public static function ctrEditProduct($editarProducto)
@@ -93,27 +87,16 @@ class CotizacionController
       return $response;
     }
   }
-  // Eliminar un producto
-  public static function ctrDeleteProduct($borrarProducto)
-  {
-    $codProduct = $borrarProducto["codPro"];
-    // Verificar si el producto está en almacén
-    $almacen = self::ctrAlamacenProductStock($codProduct);
-    if (!empty($almacen) && $almacen["cantidadProd"] > 0) {
-      $response = "error";
-    } else {
-      $table = "producto";
-      $response = CotizacionModel::mdlDeleteProduct($table, $codProduct);
-    }
-    return $response;
-  }
-  //verificar si el producto esta en alamacen
-  public static function ctrAlamacenProductStock($codProduct)
-  {
-    $table = "almacen_prod";
-    $response = CotizacionModel::mdlAlamacenProductStock($table, $codProduct);
-    return $response;
-  }
+   // Eliminar cotizacion
+   public static function ctrDeleteCotizacion($borrarCotizacion)
+   {
+     $codCoti = $borrarCotizacion["codCoti"];
+       $table = "cotizacion";
+       $response = CotizacionModel::mdlDeleteCotizacion($table, $codCoti);
+ 
+     return $response;
+   }
+ 
   //Agregar Producto a la cotizacion
   public static function ctrAgregarProductoCoti($codProductoCoti)
   {
