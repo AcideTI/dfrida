@@ -12,12 +12,11 @@ class FichaTecnicaController
   }
 
   //  crear ficha tecnica
-
-  public static function ctrCrearFichaTecnica($crearFichaTecnica, $jsonFichaTecnicaBase64)
+  public static function ctrCrearFichaTecnica($crearFichaTecnica, $jsonNombreArchivo, $jsonExtensionArchivo)
   {
     if ($crearFichaTecnica["nombreFichaTecAdd"] === "" || $crearFichaTecnica["fechaFichaTecAdd"] === "" || $crearFichaTecnica["descripcionFichaTecAdd"] === "") {
       $response = "errorForm";
-    } elseif (strpos($jsonFichaTecnicaBase64, '"base64":null') !== false) {
+    } elseif ($crearFichaTecnica["fileFichaTecnica"] === "") {
       $response = "error";
     } else {
       $table = "ficha_tecnica";
@@ -31,32 +30,63 @@ class FichaTecnicaController
         "celularFichaTec" => $crearFichaTecnica["celularFichaTecAdd"],
         "correoFichaTec" => $crearFichaTecnica["correoFichaTecAdd"],
         "detalleFichaTec" => $crearFichaTecnica["detalleFichaTecAdd"],
-        "docFichaTec" => $jsonFichaTecnicaBase64,
+        //"docFichaTec" => $jsonFichaTecnicaBase64,
         "estadoFichaTec" => 1,
         "DateCreate" => date("Y-m-d\TH:i:sP")
       );
       $response = FichaTecnicaModel::mdCrearFichaTecnica($table, $dataCreate);
+      if ($response === "ok") {
+        //obtener el ultimo registro de la ficha tecnica
+        $idFichaTec = self::ctrCrearObtenerElUltimoRegistro($table);
+        //registrar el documento de la ficha tecnica con el id del registro para ubicar el archivo en el direcorio id_fichatecnica
+        $docFichaTec = self::ctrRegistrarDocFichaTec($table, $idFichaTec, $jsonNombreArchivo, $jsonExtensionArchivo);
+        if ($docFichaTec === "ok") {
+          //retornar el id de la ficha tecnica para crear el archivo con el id como nombre
+          $response = $idFichaTec["idFichaTec"];
+        }
+      }
     }
     return $response;
+  }
+  //obtener el ultimo registro de la ficha tecnica
+  public static function ctrCrearObtenerElUltimoRegistro($table)
+  {
+    $response = FichaTecnicaModel::mdCrearObtenerElUltimoRegistro($table);
+    return $response;
+  }
+  //registrar el documento de la ficha tecnica con el id del registro para ubicar el archivo en el direcorio id_fichatecnica
+  public static function ctrRegistrarDocFichaTec($table, $idFichaTec, $jsonNombreArchivo, $jsonExtensionArchivo)
+  {
+    // Remover comillas dobles de las variables
+    $jsonNombreArchivo = str_replace('"', '', $jsonNombreArchivo);
+    $jsonExtensionArchivo = str_replace('"', '', $jsonExtensionArchivo);
 
+    // Crear un texto con estos valores que son de tipo texto
+    $docFichaTec = $idFichaTec["idFichaTec"] . "_" . $jsonNombreArchivo . $jsonExtensionArchivo;
+
+    $response = FichaTecnicaModel::mdlRegistrarDocFichaTec($table, $idFichaTec, $docFichaTec);
+
+    return $response;
   }
   //  visualizar datos ficha tecnica
   public static function ctrViewDatosFichaTecnica($codFichaTec)
   {
     $table = "ficha_tecnica";
     $response = FichaTecnicaModel::mdlViewDatosFichaTecnica($table, $codFichaTec);
-    unset($response['docFichaTec']);
-    $response['docFichaTec'] = "Documento eliminado para no sobrecargar el servidor y el navegador del usuario los elimine muchos caracateres p xdxdxd";
     return $response;
   }
 
   // Editar ficha técnica
-  public static function ctrEditarFichaTecnica($editarFichaTecnica, $jsonFichaTecnicaBase64)
+  public static function ctrEditarFichaTecnica($editarFichaTecnica, $jsonNombreArchivo, $jsonExtensionArchivo)
   {
-    $table = 'ficha_Tecnica';
-    // Verificar si no se modificó la ficha técnica o si el JSON tiene "base64":null
-    if
-    (strpos($jsonFichaTecnicaBase64, '"base64":null') === false) {
+    $table = 'ficha_tecnica';
+    // Remover comillas dobles de las variables
+    $jsonNombreArchivo = str_replace('"', '', $jsonNombreArchivo);
+    $jsonExtensionArchivo = str_replace('"', '', $jsonExtensionArchivo);
+
+    if (!empty($jsonNombreArchivo) && !empty($jsonExtensionArchivo)) {
+      // Crear un nuevo nombre para el documento de la ficha técnica
+      $newNamedocFichaTec = $editarFichaTecnica["codFichaTec"] . "_" . $jsonNombreArchivo . $jsonExtensionArchivo;
       // Preparar datos para actualizar, incluyendo el documento y el estado
       $dataUpdate = array(
         "idFichaTec" => $editarFichaTecnica["codFichaTec"],
@@ -69,7 +99,7 @@ class FichaTecnicaController
         "celularFichaTec" => $editarFichaTecnica["celularFichaTecEdit"],
         "correoFichaTec" => $editarFichaTecnica["correoFichaTecEdit"],
         "detalleFichaTec" => $editarFichaTecnica["detalleFichaTecEdit"],
-        "docFichaTec" => $jsonFichaTecnicaBase64,
+        "docFichaTec" => $newNamedocFichaTec,
         "estadoFichaTec" => 1,
         "DateUpdate" => date("Y-m-d\TH:i:sP")
       );
@@ -104,9 +134,18 @@ class FichaTecnicaController
       $response = "error";
     } else {
       // Si la ficha técnica no está en uso, proceder con la eliminación
-      $table = "ficha_Tecnica";
-      $response = FichaTecnicaModel::mdlDeleteFichaTecnica($table, $codFichaTec);
+      $table = "ficha_tecnica";
+      //obtebre el nombre de la ficha tecnica para eliminar el archivo
+      $docFichaTec = self::ctrDocFichaTecnica($table, $codFichaTec);
+      $eliminar = FichaTecnicaModel::mdlDeleteFichaTecnica($table, $codFichaTec);
+
     }
+    return $docFichaTec;
+  }
+  //obtebre el nombre de la ficha tecnica para eliminar el archivo
+  public static function ctrDocFichaTecnica($table, $codFichaTec)
+  {
+    $response = FichaTecnicaModel::mdlDocFichaTecnica($table, $codFichaTec);
     return $response;
   }
   //verificar si esta en uso la ficha tecnica
@@ -123,7 +162,7 @@ class FichaTecnicaController
     $codCotiB64 = $codCotiB64["codFichaTec"];
     //cambiar estado de la ficha tecnica al descargar
     $newEstadoCoti = self::ctrEstadoDescargaFichaTecnica($codCotiB64);
-    $table = "ficha_Tecnica";
+    $table = "ficha_tecnica";
     $response = FichaTecnicaModel::mdlDescargarFichaTecnica($table, $codCotiB64);
     return $response;
   }
@@ -131,7 +170,7 @@ class FichaTecnicaController
   //cambiar estado de la ficha tecnica al descargar
   public static function ctrEstadoDescargaFichaTecnica($codCotiB64)
   {
-    $table = "ficha_Tecnica";
+    $table = "ficha_tecnica";
     $response = FichaTecnicaModel::mdlEstadoDescargaFichaTecnica($table, $codCotiB64);
     return $response;
   }

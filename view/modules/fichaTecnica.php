@@ -16,13 +16,13 @@
       </h1>
     </div>
 
-    <form role="form" method="post" class="row g-3 m-2 formFichaTecnica " id="formFichaTecnica">
+    <form role="form" method="post" class="row g-3 m-2 formFichaTecnica " id="formFichaTecnica"
+      enctype="multipart/form-data">
 
       <div class="container row g-8" style="border: 3px solid #808080; padding: 3px; margin-left: 2px; ">
 
         <h3>Ficha Tecnica</h3>
 
-        <!-- datos de la cotizacion Enpresa -->
         <div class="form-group col-md-10">
           <label for="nombreFichaTecAdd" class="form-label" style="font-weight: bold">Nombre Ficha Tecnica:</label>
           <input type="text" class="form-control" id="nombreFichaTecAdd" name="nombreFichaTecAdd"
@@ -77,7 +77,7 @@
         <!-- fin -->
       </div>
 
-      <!-- Ficha tecnica -->
+      <!-- Ficha tecnica php-->
       <div class="container row g-3" style="border: 3px solid #808080; padding: 3px; margin-left: 2px; ">
         <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
           <h3>Subir Ficha Tecnica</h3>
@@ -87,26 +87,43 @@
               <span style="display: block;">Agregar Ficha técnica</span>
               <i class="fa-solid fa-upload" style="font-size: 30px;"></i>
             </button>
-            <input type="file" id="fileFichaTecnica" style="display: none;" />
+            <input type="file" id="fileFichaTecnica" name="fileFichaTecnica" style="display: none;" />
             <div id="progressBarContainer"
               style="width: 100%; background-color: #ddd; margin-top: 10px; border-radius: 5px;">
               <div id="progressBar" style="height: 30px; width: 0%; background-color: #4CAF50; border-radius: 5px;">
               </div>
             </div>
           </div>
-
         </div>
-
       </div>
       <!-- fin -->
 
       <div class="container row g-3 p-3 ">
         <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-danger" style="margin-right: 10px;"
           id="btnCerrarFichaTecnica">Cerrar</button>
-        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-success "
-          id="btnRegistrarFichaTecnica">Registrar Ficha tecnica</button>
-      </div>
+        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-success"
+          id="btnRegistrarFichaTecnica">Registrar Ficha técnica</button>
+
     </form>
-  </main>
+</div>
+
+
+</main>
 </div>
 </div>
+
+<!-- recuperar un archivo -->
+<?php
+/* $directorio = 'fichasTecnicas';
+$archivos = scandir($directorio);
+
+
+$archivos = array_diff($archivos, array('.', '..'));
+
+
+foreach ($archivos as $archivo) {
+  echo $archivo . "<br>";
+} */
+?>
+
+<!-- eliminar un archivo -->

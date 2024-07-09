@@ -3,70 +3,60 @@ document.addEventListener("DOMContentLoaded", function () {
   var currentPath = window.location.pathname;
   var appPath = "/dfrida/fichaTecnica";
   if (currentPath == appPath) {
-    //crear dato base 64 y enviarlo por ajax
+    //inicio
 
-    // Definición de la variable global para almacenar el Base64 y el nombre del archivo
-    var fichaTecnicaData = {
-      base64: null,
-      nombreArchivo: null,
-      extensionArchivo: null,
-    };
+    // escuchar el botn y tomar el archivo para enviarlo al servidor por php y guardarlo en el directorio
+    var btnfileFichaTecnica = document.getElementById("btnfileFichaTecnica");
+    btnfileFichaTecnica.addEventListener("click", function () {
+      document.getElementById("fileFichaTecnica").click();
+    });
 
-    // Evento para abrir el diálogo de selección de archivo
-    document
-      .getElementById("btnfileFichaTecnica")
-      .addEventListener("click", function () {
-        document.getElementById("fileFichaTecnica").click();
-      });
+    var fileFichaTecnica = document.getElementById("fileFichaTecnica");
+    fileFichaTecnica.addEventListener("change", handleFileSelect);
 
-    // Evento para manejar el cambio de archivo y convertirlo a base64
-    document
-      .getElementById("fileFichaTecnica")
-      .addEventListener("change", convertirArchivoABase64YGuardarComoJSON);
-
-    // Función para convertir el archivo seleccionado a base64 y almacenarlo en la variable global
-    function convertirArchivoABase64YGuardarComoJSON() {
-      const file = document.getElementById("fileFichaTecnica").files[0];
-      if (!file) {
-        alert("No se ha seleccionado ningún archivo.");
-        return;
+    function handleFileSelect(event) {
+      if (event.target.files.length > 0) {
+        const file = event.target.files[0];
+        let nombreBaseArchivo = file.name.split(".").slice(0, -1).join("."); // Solo guarda el nombre base del archivo
+        let extensionArchivo = "." + file.name.split(".").pop(); // Guarda la extensión del archivo, incluyendo el punto
+        // Limpiar el nombre del archivo, eliminando caracteres no deseados excepto el guion bajo (_)
+        nombreBaseArchivo = nombreBaseArchivo.replace(/[^a-zA-Z0-9._]/g, "");
+        nombreArchivoSeleccionado = nombreBaseArchivo; // Actualiza la variable global con el nombre limpio
+        extensionArchivoSeleccionado = extensionArchivo; // Actualiza la variable global con la extensión
+        // Mostrar mensaje de carga
+        Swal.fire({
+          title: "Cargando la Ficha Técnica...",
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          willOpen: () => {
+            Swal.showLoading();
+          },
+          didOpen: () => {
+            // Seleccionar el icono de carga y aplicar estilos directamente
+            const loader = document.querySelector(".swal2-loader");
+            if (loader) {
+              loader.style.width = "60px";
+              loader.style.height = "60px";
+            }
+          },
+        });
+        // Cerrar el mensaje después de 2 segundos
+        setTimeout(() => {
+          Swal.close();
+        }, 1000);
+        // Actualizar la barra de progreso
+        updateProgressBar(100); // Ejemplo de actualización de progreso
       }
-
-      updateProgressBar(0); // Inicia la barra de progreso en 0%
-      const reader = new FileReader();
-      reader.onload = function (loadEvent) {
-        const base64 = loadEvent.target.result;
-        // Extrae el nombre del archivo y su extensión
-        const nombreCompletoArchivo = file.name;
-        const extensionArchivo = nombreCompletoArchivo.slice(
-          nombreCompletoArchivo.lastIndexOf(".") + 1
-        );
-        const nombreArchivo = nombreCompletoArchivo.slice(
-          0,
-          nombreCompletoArchivo.lastIndexOf(".")
-        );
-        // Almacena el resultado en base64 y el nombre del archivo en la variable global
-        fichaTecnicaData.base64 = base64.split("base64,")[1];
-        fichaTecnicaData.nombreArchivo = nombreArchivo;
-        fichaTecnicaData.extensionArchivo = extensionArchivo;
-        updateProgressBar(100); // Asegura que la barra de progreso muestre 100%
-      };
-      reader.readAsDataURL(file);
     }
 
-    // Función para actualizar la barra de progreso
     function updateProgressBar(percent) {
       const progressBar = document.getElementById("progressBar");
-      progressBar.style.width = percent + "%";
-      if (percent > 0 && percent < 100) {
-        progressBar.textContent = "Cargando...";
-      } else if (percent >= 100) {
-        progressBar.textContent = "Completado";
-      } else {
-        progressBar.textContent = "";
+      if (progressBar) {
+        progressBar.style.width = percent + "%";
+        progressBar.textContent = percent >= 100 ? "Completado" : "Cargando...";
       }
     }
-    //fin crear dato base 64 y guardar como json en la variable global para enviarlo por ajax
+    //fin enviar archivo con nuevo nombre al servidor php para guardar
 
     //si la ruta no es la correcta no se ejecuta la función
     document
@@ -85,16 +75,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         //crear el json
         var jsonCrearfichaTecnica = JSON.stringify(datosFormulario);
-        console.log(jsonCrearfichaTecnica);
-        //llamar ala bafiable donde esta el json dela ficha tecninca y enviarlo junto al los datos  al servuidor
-        var jsonFichaTecnicaBase64 = JSON.stringify(fichaTecnicaData);
-        //console.log(jsonFichaTecnicaBase64);
+        //nombre del archivo
+        var jsonNombreArchivo = JSON.stringify(nombreArchivoSeleccionado);
+        //extencion dela rchivo
+        var jsonExtensionArchivo = JSON.stringify(extensionArchivoSeleccionado);
+
         $.ajax({
           url: "ajax/fichaTecnica.ajax.php",
           method: "POST",
           data: {
             jsonCrearfichaTecnica: jsonCrearfichaTecnica,
-            jsonFichaTecnicaBase64: jsonFichaTecnicaBase64,
+            jsonNombreArchivo: jsonNombreArchivo,
+            jsonExtensionArchivo: jsonExtensionArchivo,
           },
           dataType: "json",
           success: function (response) {
@@ -106,28 +98,41 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.pathname
               );
             };
+            // Verificar si la respuesta es un número el id del registro
+            // Convierte response a una cadena para asegurar que .trim() funcione
+            let responseStr = String(response).trim();
+            // Verificar si la respuesta convertida a cadena es un número
+            if (!isNaN(responseStr) && responseStr !== "") {
+              // Asegura que la respuesta no esté vacía y sea un número
+              let numero = parseInt(responseStr, 10); // Convierte la respuesta a un número entero
+              let nombreArchivoModificado =
+                numero + "_" + nombreArchivoSeleccionado; // Modifica el nombre del archivo
 
-            if (response == "ok") {
-              Swal.fire({
-                icon: "success",
-                title: "Correcto",
-                html: "Ficha Tecnica Creada Correctamente <br><strong>¿Desea Crear Otra?</strong> ",
-                showCancelButton: true,
-                confirmButtonText: "Si",
-                cancelButtonText: "No",
-              }).then(function (result) {
-                if (result.value) {
-                  limpiarURL();
-                  window.location.reload();
-                } else {
-                  window.location.href = "/dfrida/fichaTecnicaList";
-                }
-              });
+              // Llama a la función para enviar el archivo con el nuevo nombre
+              enviarArchivoConNuevoNombre(nombreArchivoModificado);
+              /* esperar un respuesta */
+              //del servidor
+              //y envia a otra vista despues de una respeusta
             } else if (response == "errorForm") {
               Swal.fire({
                 icon: "error",
                 title: "Error",
                 html: "No se pudo crear la Ficha Tecnica  verifique los siguentes datos <br><strong>Nombre Ficha, Fecha, Descripcion Ficha</strong>.",
+                showCancelButton: true,
+                confirmButtonText: "Ok",
+                cancelButtonText: "No",
+              }).then(function (result) {
+                if (result.value) {
+                  limpiarURL();
+                } else {
+                  window.location.href = "/dfrida/fichaTecnicaList";
+                }
+              });
+            } else if (response == "errorFicha") {
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                html: "No se pudo crear la Ficha Tecnica  el <strong>max_allowed_packet=1M</strong> no se modifico.",
                 showCancelButton: true,
                 confirmButtonText: "Ok",
                 cancelButtonText: "No",
@@ -164,6 +169,53 @@ document.addEventListener("DOMContentLoaded", function () {
           },
         });
       });
+    //funcion apra envair el archivo ala funcion php que gaurdara ela rchivo en el directorio del sistema
+    function enviarArchivoConNuevoNombre(nombreArchivoModificado) {
+      var fileInput = document.getElementById("fileFichaTecnica");
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("nombreArchivo", nombreArchivoModificado); // Añade el nuevo nombre del archivo
+        formData.append("fileFichaTecnica", file); // Añade el archivo
+
+        $.ajax({
+          url: "fichasTecnicas/guardarFichasTecnicas.php",
+          type: "POST",
+          data: formData,
+          processData: false, // Evitar que jQuery procese los datos
+          contentType: false, // Evitar que jQuery establezca el tipo de contenido
+          success: function (response) {
+            // Asumiendo que el servidor devuelve un objeto JSON con un campo "status"
+            if (response.status === "ok") {
+              Swal.fire({
+                icon: "success",
+                title: "Correcto",
+                html: "Ficha Técnica Registrada <strong>Correctamente</strong>.",
+                confirmButtonText: "Ok",
+              }).then((result) => {
+                window.location.href = "/dfrida/fichaTecnicaList";
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No se pudo registrar la ficha técnica.",
+              });
+            }
+          },
+          error: function (xhr, status, error) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Ocurrió un error al enviar el archivo.",
+            });
+          },
+        });
+      } else {
+        console.log("No hay archivo seleccionado.");
+      }
+    }
+    //fin enviar archivo
     //fin vericar ruta
   }
 });
@@ -210,6 +262,11 @@ document.addEventListener("DOMContentLoaded", function () {
       history.replaceState(null, "", newUrl);
     }
 
+    //variabla para el nombre del nuevo archivo
+    var globalIdFichaTec = null;
+    //variabla  del nombre anteriro del la ficha tecnica
+    var globalDocFichaTec = null;
+
     //  editar ficha tecnica
     //obtener el valor guardado en el campo oculto cuando carga la pagina
     var codFichaTec = document.getElementById("codFichaTec").value;
@@ -225,7 +282,9 @@ document.addEventListener("DOMContentLoaded", function () {
       processData: false,
       dataType: "json",
       success: function (response) {
-        $("#codFichaTecEdit").val(response["idFichTec"]);
+        globalIdFichaTec = response["idFichaTec"];
+        globalDocFichaTec = response["docFichaTec"];
+        $("#codFichaTecEdit").val(response["idFichaTec"]);
         $("#nombreFichaTecEdit").val(response["nombreFichaTec"]);
         $("#fechaFichaTecEdit").val(response["fechaFichaTec"]);
         $("#clienteFichaTecEdit").val(response["clienteFichaTec"]);
@@ -246,6 +305,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       // Función simplificada para actualizar la barra de progreso
     });
+
     function updateProgressBarEdit(percent) {
       const progressBar = document.getElementById("progressBarEdit");
       progressBar.style.width = percent + "%";
@@ -253,70 +313,74 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     //fin visualizar los datos
 
-    //crear dato base 64 y enviarlo por ajax
+    //inicio editar ficha tecnica
+    // escuchar el botn y tomar el archivo para enviarlo al servidor por php y guardarlo en el directorio
+    var btnfileFichaTecnicaEdit = document.getElementById(
+      "btnfileFichaTecnicaEdit"
+    );
+    btnfileFichaTecnicaEdit.addEventListener("click", function () {
+      document.getElementById("fileFichaTecnicaEdit").click();
+    });
 
-    // Definición de la variable global para almacenar el Base64 y el nombre del archivo
-    var fichaTecnicaData = {
-      base64: null,
-      nombreArchivo: null,
-      extensionArchivo: null,
-    };
+    var fileFichaTecnicaEdit = document.getElementById("fileFichaTecnicaEdit");
+    fileFichaTecnicaEdit.addEventListener("change", handleFileSelect);
 
-    // Evento para abrir el diálogo de selección de archivo
-    document
-      .getElementById("btnfileFichaTecnicaEdit")
-      .addEventListener("click", function () {
-        document.getElementById("fileFichaTecnicaEdit").click();
-      });
+    // Inicializar variables globales como vacías
+    nombreArchivoSeleccionadoEdit = "";
+    extensionArchivoSeleccionadoEdit = "";
 
-    // Evento para manejar el cambio de archivo y convertirlo a base64
-    document
-      .getElementById("fileFichaTecnicaEdit")
-      .addEventListener("change", convertirArchivoABase64YGuardarComoJSON);
+    function handleFileSelect(event) {
+      if (event.target.files.length > 0) {
+        const file = event.target.files[0];
+        let nombreBaseArchivo = file.name.split(".").slice(0, -1).join("."); // Solo guarda el nombre base del archivo
+        let extensionArchivo = "." + file.name.split(".").pop(); // Guarda la extensión del archivo, incluyendo el punto
 
-    // Función para convertir el archivo seleccionado a base64 y almacenarlo en la variable global
-    function convertirArchivoABase64YGuardarComoJSON() {
-      const file = document.getElementById("fileFichaTecnicaEdit").files[0];
-      if (!file) {
-        alert("No se ha seleccionado ningún archivo.");
-        return;
-      }
+        // Limpiar el nombre del archivo, eliminando caracteres no deseados excepto el guion bajo (_)
+        nombreBaseArchivo = nombreBaseArchivo.replace(/[^a-zA-Z0-9._]/g, "");
 
-      updateProgressBar(0); // Inicia la barra de progreso en 0%
-      const reader = new FileReader();
-      reader.onload = function (loadEvent) {
-        const base64 = loadEvent.target.result;
-        // Extrae el nombre del archivo y su extensión
-        const nombreCompletoArchivo = file.name;
-        const extensionArchivo = nombreCompletoArchivo.slice(
-          nombreCompletoArchivo.lastIndexOf(".") + 1
-        );
-        const nombreArchivo = nombreCompletoArchivo.slice(
-          0,
-          nombreCompletoArchivo.lastIndexOf(".")
-        );
-        // Almacena el resultado en base64 y el nombre del archivo en la variable global
-        fichaTecnicaData.base64 = base64.split("base64,")[1];
-        fichaTecnicaData.nombreArchivo = nombreArchivo;
-        fichaTecnicaData.extensionArchivo = extensionArchivo;
-        updateProgressBar(100); // Asegura que la barra de progreso muestre 100%
-      };
-      reader.readAsDataURL(file);
-    }
+        nombreArchivoSeleccionadoEdit = nombreBaseArchivo; // Actualiza la variable global con el nombre limpio
+        extensionArchivoSeleccionadoEdit = extensionArchivo; // Actualiza la variable global con la extensión
 
-    // Función para actualizar la barra de progreso
-    function updateProgressBar(percent) {
-      const progressBar = document.getElementById("progressBarEdit");
-      progressBar.style.width = percent + "%";
-      if (percent > 0 && percent < 100) {
-        progressBar.textContent = "Cargando...";
-      } else if (percent >= 100) {
-        progressBar.textContent = "Cambio Completo";
+        // Mostrar mensaje de carga
+        Swal.fire({
+          title: "Cargando la Ficha Técnica...",
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          willOpen: () => {
+            Swal.showLoading();
+          },
+          didOpen: () => {
+            // Seleccionar el icono de carga y aplicar estilos directamente
+            const loader = document.querySelector(".swal2-loader");
+            if (loader) {
+              loader.style.width = "60px";
+              loader.style.height = "60px";
+            }
+          },
+        });
+
+        // Cerrar el mensaje después de 2 segundos
+        setTimeout(() => {
+          Swal.close();
+        }, 1000);
+
+        // Actualizar la barra de progreso
+        updateProgressBar(100); // Ejemplo de actualización de progreso
       } else {
-        progressBar.textContent = "";
+        // Aquí puedes manejar el caso en que no se seleccionen archivos
+        // Por ejemplo, mostrar un mensaje o realizar alguna acción específica
+        console.log("No se ha seleccionado ningún archivo.");
       }
     }
-    //fin crear dato base 64 y guardar como json en la variable global para enviarlo por ajax
+
+    function updateProgressBar(percent) {
+      const progressBar = document.getElementById("progressBar");
+      if (progressBar) {
+        progressBar.style.width = percent + "%";
+        progressBar.textContent = percent >= 100 ? "Completado" : "Cargando...";
+      }
+    }
+    //fin enviar archivo con nuevo nombre al servidor php para guardar
 
     $("#btnEditarFichaTecnica").on("click", function () {
       //obtener el formulario por id
@@ -332,26 +396,46 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       //crear el json
       var jsonEditarFichaTecnica = JSON.stringify(datosFormulario);
-      //enviar el json por ajax
-      //llamar ala bafiable donde esta el json dela ficha tecninca y enviarlo junto al los datos  al servuidor
-      var jsonFichaTecnicaBase64 = JSON.stringify(fichaTecnicaData);
+      //nombre del archivo
+      var jsonNombreArchivo = JSON.stringify(nombreArchivoSeleccionadoEdit);
+      //extencion dela rchivo
+      var jsonExtensionArchivo = JSON.stringify(
+        extensionArchivoSeleccionadoEdit
+      );
+
       $.ajax({
         url: "ajax/fichaTecnica.ajax.php",
         method: "POST",
         data: {
           jsonEditarFichaTecnica: jsonEditarFichaTecnica,
-          jsonFichaTecnicaBase64: jsonFichaTecnicaBase64,
+          jsonNombreArchivo: jsonNombreArchivo,
+          jsonExtensionArchivo: jsonExtensionArchivo,
         },
         dataType: "json",
         success: function (response) {
+          nombreArchivoSeleccionadoEdit = nombreArchivoSeleccionadoEdit.trim();
+
+          extensionArchivoSeleccionadoEdit =
+            extensionArchivoSeleccionadoEdit.trim();
+
           if (response == "ok") {
-            Swal.fire(
-              "Correcto",
-              "Ficha Tecnica editada correctamente",
-              "success"
-            ).then(function () {
-              window.location.href = "/dfrida/fichaTecnicaList";
-            });
+            if (
+              nombreArchivoSeleccionadoEdit === "" ||
+              extensionArchivoSeleccionadoEdit === ""
+            ) {
+              Swal.fire(
+                "Correcto",
+                "Ficha Tecnica editada correctamente",
+                "success"
+              ).then(function () {
+                window.location.href = "/dfrida/fichaTecnicaList";
+              });
+            } else {
+              let nombreArchivoModificadoEdit =
+                globalIdFichaTec + "_" + nombreArchivoSeleccionadoEdit;
+
+              enviarArchivoConNuevoNombreEdit(nombreArchivoModificadoEdit);
+            }
           } else {
             Swal.fire(
               "Error",
@@ -366,6 +450,53 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
     //fin editar
+
+    function enviarArchivoConNuevoNombreEdit(nombreArchivoModificadoEdit) {
+      var fileInput = document.getElementById("fileFichaTecnicaEdit");
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("nombreArchivoEliminar", globalDocFichaTec); // nombre anterior del archivo
+        formData.append("nombreArchivoEdit", nombreArchivoModificadoEdit); // Añade el nuevo nombre del archivo
+        formData.append("fileFichaTecnicaEdit", file); // Añade el archivo
+
+        $.ajax({
+          url: "fichasTecnicas/editarFichasTecnicas.php",
+          type: "POST",
+          data: formData,
+          processData: false, // Evitar que jQuery procese los datos
+          contentType: false, // Evitar que jQuery establezca el tipo de contenido
+          success: function (response) {
+            // Asumiendo que el servidor devuelve un objeto JSON con un campo "status"
+            if (response.status === "ok") {
+              Swal.fire({
+                icon: "success",
+                title: "Correcto",
+                html: "Ficha Técnica Editada con <strong>Exito</strong>.",
+                confirmButtonText: "Ok",
+              }).then((result) => {
+                window.location.href = "/dfrida/fichaTecnicaList";
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No se pudo editar la ficha técnica.",
+              });
+            }
+          },
+          error: function (xhr, status, error) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Ocurrió un error al enviar el archivo.",
+            });
+          },
+        });
+      } else {
+        console.log("No hay archivo seleccionado.");
+      }
+    }
   }
 });
 //fin
@@ -403,21 +534,49 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: { jsonBorraFichaTecnica: jsonBorraFichaTecnica },
                 dataType: "json",
                 success: function (response) {
-                  if (response == "ok") {
-                    Swal.fire(
-                      "Correcto",
-                      "Ficha Tecnica eliminada correctamente",
-                      "success"
-                    ).then(function () {
-                      window.location.reload(); // Recargar la página
-                    });
-                  } else {
+                  if (response == "error") {
                     Swal.fire(
                       "Error",
-                      "La Ficha Tecnica no se puede eliminar",
+                      "No se pudo borrar la Ficha Tecnica",
                       "error"
-                    ).then(function () {
-                      //window.location.reload(); // Recargar la página
+                    );
+                  } else {
+                    //la respuesta trae el nombre del archivo a eliminar
+                    $.ajax({
+                      //enviar nombre a eliminar al servidor
+                      url: "fichasTecnicas/eliminarFichasTecnicas.php",
+                      method: "POST",
+                      data: { docFichaTec: response.docFichaTec },
+                      dataType: "json",
+                      success: function (response) {
+                        if (response.status === "ok") {
+                          Swal.fire(
+                            "Correcto",
+                            "Ficha Tecnica eliminada correctamente.",
+                            "success"
+                          ).then(function () {
+                            window.location.reload(); // Recargar la página.
+                          });
+                        } else {
+                          // Manejo de una respuesta no exitosa de la segunda llamada AJAX.
+                          Swal.fire(
+                            "Error",
+                            "La ficha tecnica no se pudo eliminar.",
+                            "error"
+                          ).then(function () {
+                            window.location.reload(); // Recargar la página.
+                          });
+                        }
+                      },
+                      error: function (error) {
+                        // Manejo de un error en la segunda llamada AJAX.
+                        console.error("Error:", error);
+                        Swal.fire(
+                          "Error",
+                          "La Ficha tecnica no se pudo eliminar.",
+                          "error"
+                        );
+                      },
                     });
                   }
                 },
@@ -431,6 +590,110 @@ document.addEventListener("DOMContentLoaded", function () {
               });
             }
           });
+      }
+    );
+  }
+});
+//fin eliminar
+
+// Descargar ficha tecnica
+document.addEventListener("DOMContentLoaded", function () {
+  var currentPath = window.location.pathname;
+  var appPath = "/dfrida/fichaTecnicaList";
+  if (currentPath === appPath) {
+    // Asegúrate de que el selector para dataTableFichaTenica es correcto y existe en tu HTML
+    $(".dataTableFichaTenica").on(
+      "click",
+      ".btnDescargarFichaTecnica",
+      function () {
+        var codFichaTec = $(this).attr("codFichaTec");
+        var jsonDescargarFichaTecnica = JSON.stringify({
+          codFichaTec: codFichaTec,
+        });
+        $.ajax({
+          url: "ajax/fichaTecnica.ajax.php",
+          method: "POST",
+          data: { jsonDescargarFichaTecnica: jsonDescargarFichaTecnica },
+          dataType: "json",
+          success: function (response) {
+            // Acceder al JSON usando el identificador docFichaTec.
+            $.ajax({
+              //enviar nombre a eliminar al servidor
+              url: "fichasTecnicas/descargaFichasTecnicas.php",
+              method: "POST",
+              data: { docFichaTec: response.docFichaTec },
+              dataType: "json",
+              success: function (response) {
+                if (response.status === "success") {
+                  Swal.fire({
+                    title: "Descargando Ficha Técnica...",
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    willOpen: () => {
+                      Swal.showLoading();
+                    },
+                    didOpen: () => {
+                      const loader = document.querySelector(".swal2-loader");
+                      if (loader) {
+                        loader.style.width = "60px";
+                        loader.style.height = "60px";
+                      }
+                    },
+                  });
+
+                  // Crea un elemento <a> temporal para descargar el archivo
+                  var link = document.createElement("a");
+                  link.href = response.url;
+
+                  // Extrae el nombre del archivo de la URL
+                  var nombreArchivoOriginal = response.url.split("/").pop();
+
+                  // Elimina todo lo que esté antes del primer "_" incluido el "_"
+                  var nombreArchivoModificado = nombreArchivoOriginal.substring(
+                    nombreArchivoOriginal.indexOf("_") + 1
+                  );
+                  // El atributo 'download' se usa para asignar el nuevo nombre al archivo descargado
+                  link.download = nombreArchivoModificado; // Asigna el nuevo nombre al archivo
+
+                  document.body.appendChild(link); // Agrega el enlace al documento
+                  link.click(); // Simula un clic en el enlace para iniciar la descarga
+                  document.body.removeChild(link); // Elimina el enlace del documento
+
+                  // Espera 1 segundo antes de cerrar el mensaje y recargar la página
+                  setTimeout(() => {
+                    Swal.close();
+                    window.location.reload(); // Recargar la página.
+                  }, 500); // 1000 milisegundos = 1 segundo
+                  //
+                } else {
+                  // Manejo de una respuesta no exitosa de la segunda llamada AJAX.
+                  Swal.fire(
+                    "Error",
+                    "La ficha técnica no se pudo descargar.",
+                    "error"
+                  );
+                }
+              },
+              error: function (error) {
+                // Manejo de un error en la segunda llamada AJAX.
+                console.error("Error:", error);
+                Swal.fire(
+                  "Error",
+                  "La Ficha tecnica eror de errores.",
+                  "error"
+                );
+              },
+            });
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.responseText); // Procedencia de error
+            console.log(
+              "Error en la solicitud AJAX: ",
+              textStatus,
+              errorThrown
+            );
+          },
+        });
       }
     );
   }
