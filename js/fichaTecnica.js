@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var appPath = "/dfrida/fichaTecnica";
   if (currentPath == appPath) {
     //inicio
-
     // escuchar el botn y tomar el archivo para enviarlo al servidor por php y guardarlo en el directorio
     var btnfileFichaTecnica = document.getElementById("btnfileFichaTecnica");
     btnfileFichaTecnica.addEventListener("click", function () {
@@ -14,15 +13,24 @@ document.addEventListener("DOMContentLoaded", function () {
     var fileFichaTecnica = document.getElementById("fileFichaTecnica");
     fileFichaTecnica.addEventListener("change", handleFileSelect);
 
+    // Inicializar variables globales como vacías
+    nombreArchivoSeleccionado = "";
+    extensionArchivoSeleccionado = "";
+
     function handleFileSelect(event) {
       if (event.target.files.length > 0) {
         const file = event.target.files[0];
         let nombreBaseArchivo = file.name.split(".").slice(0, -1).join("."); // Solo guarda el nombre base del archivo
+        //console.log(nombreBaseArchivo);
         let extensionArchivo = "." + file.name.split(".").pop(); // Guarda la extensión del archivo, incluyendo el punto
+        //console.log(extensionArchivo);
         // Limpiar el nombre del archivo, eliminando caracteres no deseados excepto el guion bajo (_)
         nombreBaseArchivo = nombreBaseArchivo.replace(/[^a-zA-Z0-9._]/g, "");
+
         nombreArchivoSeleccionado = nombreBaseArchivo; // Actualiza la variable global con el nombre limpio
+
         extensionArchivoSeleccionado = extensionArchivo; // Actualiza la variable global con la extensión
+
         // Mostrar mensaje de carga
         Swal.fire({
           title: "Cargando la Ficha Técnica...",
@@ -169,57 +177,73 @@ document.addEventListener("DOMContentLoaded", function () {
           },
         });
       });
-    //funcion apra envair el archivo ala funcion php que gaurdara ela rchivo en el directorio del sistema
-    function enviarArchivoConNuevoNombre(nombreArchivoModificado) {
-      var fileInput = document.getElementById("fileFichaTecnica");
-      if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        const formData = new FormData();
-        formData.append("nombreArchivo", nombreArchivoModificado); // Añade el nuevo nombre del archivo
-        formData.append("fileFichaTecnica", file); // Añade el archivo
 
-        $.ajax({
-          url: "fichasTecnicas/guardarFichasTecnicas.php",
-          type: "POST",
-          data: formData,
-          processData: false, // Evitar que jQuery procese los datos
-          contentType: false, // Evitar que jQuery establezca el tipo de contenido
-          success: function (response) {
-            // Asumiendo que el servidor devuelve un objeto JSON con un campo "status"
-            if (response.status === "ok") {
-              Swal.fire({
-                icon: "success",
-                title: "Correcto",
-                html: "Ficha Técnica Registrada <strong>Correctamente</strong>.",
-                confirmButtonText: "Ok",
-              }).then((result) => {
-                window.location.href = "/dfrida/fichaTecnicaList";
-              });
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "No se pudo registrar la ficha técnica.",
-              });
-            }
-          },
-          error: function (xhr, status, error) {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Ocurrió un error al enviar el archivo.",
-            });
-          },
-        });
-      } else {
-        console.log("No hay archivo seleccionado.");
-      }
-    }
-    //fin enviar archivo
     //fin vericar ruta
   }
 });
 //fin crear ficha tecnica
+
+//funcion apra envair el archivo ala funcion php que gaurdara ela rchivo en el directorio del sistema
+function enviarArchivoConNuevoNombre(nombreArchivoModificado) {
+  var fileInput = document.getElementById("fileFichaTecnica");
+  if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    // console.log("Archivo a enviar:", file); // Visualizar el archivo en la consola
+
+    const formData = new FormData();
+    formData.append("nombreArchivo", nombreArchivoModificado); // Añade el nuevo nombre del archivo
+    formData.append("fileFichaTecnica", file); // Añade el archivo
+
+    // Visualizar el contenido de FormData
+    /*   formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    }); */
+    $.ajax({
+      url: "fichasTecnicas/guardarFichasTecnicas.php",
+      type: "POST",
+      data: formData,
+      processData: false, // Evitar que jQuery procese los datos
+      contentType: false, // Evitar que jQuery establezca el tipo de contenido
+      success: function (response) {
+        function mostrarMensaje(index) {
+          // Verificar si el índice está fuera del rango del array de respuestas
+          if (index >= response.length) {
+            // Redirigir al usuario a la ruta especificada después de mostrar el último mensaje
+            window.location.href = "/dfrida/fichaTecnicaList";
+            return;
+          }
+
+          let item = response[index];
+          let icono = item.status === "ok" ? "success" : "error";
+          let titulo = item.status === "ok" ? "Éxito" : "Error";
+
+          // Mostrar el mensaje actual
+          Swal.fire({
+            icon: icono,
+            title: titulo,
+            html: item.message,
+          }).then(() => {
+            // Una vez cerrado el mensaje actual, mostrar el siguiente
+            mostrarMensaje(index + 1);
+          });
+        }
+
+        // Iniciar la cadena de mensajes desde el primer elemento
+        mostrarMensaje(0);
+      },
+      error: function (xhr, status, error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Ocurrió un error al enviar el archivo.",
+        });
+      },
+    });
+  } else {
+    console.log("No hay archivo seleccionado.");
+  }
+}
+//fin enviar archivo
 
 //inicio edicion de ficha tecnica
 // Enviar código a la vista de editar ficha técnica para visualizar los datos
@@ -237,19 +261,22 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 // Fin
 //tomar el valor de la ur y asignarlo al campo oculto
+function getQueryParam(name) {
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(window.location.href);
+  if (!results) return null;
+  if (!results[2]) return "";
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+//variabla  del nombre anteriro del la ficha tecnica
+var globalDocFichaTec = null;
+
 document.addEventListener("DOMContentLoaded", function () {
   var currentPath = window.location.pathname;
   var appPath = "/dfrida/fichaTecnicaEdit";
   if (currentPath == appPath) {
     // Función para obtener el valor de un parámetro por nombre
-    function getQueryParam(name) {
-      name = name.replace(/[\[\]]/g, "\\$&");
-      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(window.location.href);
-      if (!results) return null;
-      if (!results[2]) return "";
-      return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
 
     // Extraer el valor de 'codFichaTec' de la URL
     var codFichaTec = getQueryParam("codFichaTec");
@@ -264,8 +291,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //variabla para el nombre del nuevo archivo
     var globalIdFichaTec = null;
-    //variabla  del nombre anteriro del la ficha tecnica
-    var globalDocFichaTec = null;
 
     //  editar ficha tecnica
     //obtener el valor guardado en el campo oculto cuando carga la pagina
@@ -324,7 +349,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var fileFichaTecnicaEdit = document.getElementById("fileFichaTecnicaEdit");
     fileFichaTecnicaEdit.addEventListener("change", handleFileSelect);
-
     // Inicializar variables globales como vacías
     nombreArchivoSeleccionadoEdit = "";
     extensionArchivoSeleccionadoEdit = "";
@@ -332,14 +356,19 @@ document.addEventListener("DOMContentLoaded", function () {
     function handleFileSelect(event) {
       if (event.target.files.length > 0) {
         const file = event.target.files[0];
-        let nombreBaseArchivo = file.name.split(".").slice(0, -1).join("."); // Solo guarda el nombre base del archivo
-        let extensionArchivo = "." + file.name.split(".").pop(); // Guarda la extensión del archivo, incluyendo el punto
+        let nombreBaseArchivoEdit = file.name.split(".").slice(0, -1).join("."); // Solo guarda el nombre base del archivo
+        console.log(nombreBaseArchivoEdit);
+        let extensionArchivoEdit = "." + file.name.split(".").pop(); // Guarda la extensión del archivo, incluyendo el punto
+        console.log(extensionArchivoEdit);
 
         // Limpiar el nombre del archivo, eliminando caracteres no deseados excepto el guion bajo (_)
-        nombreBaseArchivo = nombreBaseArchivo.replace(/[^a-zA-Z0-9._]/g, "");
+        nombreBaseArchivoEdit = nombreBaseArchivoEdit.replace(
+          /[^a-zA-Z0-9._]/g,
+          ""
+        );
 
-        nombreArchivoSeleccionadoEdit = nombreBaseArchivo; // Actualiza la variable global con el nombre limpio
-        extensionArchivoSeleccionadoEdit = extensionArchivo; // Actualiza la variable global con la extensión
+        nombreArchivoSeleccionadoEdit = nombreBaseArchivoEdit; // Actualiza la variable global con el nombre limpio
+        extensionArchivoSeleccionadoEdit = extensionArchivoEdit; // Actualiza la variable global con la extensión
 
         // Mostrar mensaje de carga
         Swal.fire({
@@ -450,56 +479,56 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
     //fin editar
-
-    function enviarArchivoConNuevoNombreEdit(nombreArchivoModificadoEdit) {
-      var fileInput = document.getElementById("fileFichaTecnicaEdit");
-      if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        const formData = new FormData();
-        formData.append("nombreArchivoEliminar", globalDocFichaTec); // nombre anterior del archivo
-        formData.append("nombreArchivoEdit", nombreArchivoModificadoEdit); // Añade el nuevo nombre del archivo
-        formData.append("fileFichaTecnicaEdit", file); // Añade el archivo
-
-        $.ajax({
-          url: "fichasTecnicas/editarFichasTecnicas.php",
-          type: "POST",
-          data: formData,
-          processData: false, // Evitar que jQuery procese los datos
-          contentType: false, // Evitar que jQuery establezca el tipo de contenido
-          success: function (response) {
-            // Asumiendo que el servidor devuelve un objeto JSON con un campo "status"
-            if (response.status === "ok") {
-              Swal.fire({
-                icon: "success",
-                title: "Correcto",
-                html: "Ficha Técnica Editada con <strong>Exito</strong>.",
-                confirmButtonText: "Ok",
-              }).then((result) => {
-                window.location.href = "/dfrida/fichaTecnicaList";
-              });
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "No se pudo editar la ficha técnica.",
-              });
-            }
-          },
-          error: function (xhr, status, error) {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Ocurrió un error al enviar el archivo.",
-            });
-          },
-        });
-      } else {
-        console.log("No hay archivo seleccionado.");
-      }
-    }
   }
 });
 //fin
+
+function enviarArchivoConNuevoNombreEdit(nombreArchivoModificadoEdit) {
+  var fileInput = document.getElementById("fileFichaTecnicaEdit");
+  if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append("nombreArchivoEliminar", globalDocFichaTec); // nombre anterior del archivo
+    formData.append("nombreArchivoEdit", nombreArchivoModificadoEdit); // Añade el nuevo nombre del archivo
+    formData.append("fileFichaTecnicaEdit", file); // Añade el archivo
+
+    $.ajax({
+      url: "fichasTecnicas/editarFichasTecnicas.php",
+      type: "POST",
+      data: formData,
+      processData: false, // Evitar que jQuery procese los datos
+      contentType: false, // Evitar que jQuery establezca el tipo de contenido
+      success: function (response) {
+        // Asumiendo que el servidor devuelve un objeto JSON con un campo "status"
+        if (response.status === "ok") {
+          Swal.fire({
+            icon: "success",
+            title: "Correcto",
+            html: "Ficha Técnica Editada con <strong>Exito</strong>.",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            window.location.href = "/dfrida/fichaTecnicaList";
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se pudo editar la ficha técnica.",
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Ocurrió un error al enviar el archivo.",
+        });
+      },
+    });
+  } else {
+    console.log("No hay archivo seleccionado.");
+  }
+}
 
 // eliminar Cotizacion
 document.addEventListener("DOMContentLoaded", function () {
