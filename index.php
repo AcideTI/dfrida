@@ -15,7 +15,15 @@ require_once "controller/categoriaProdMprima.controller.php";
 require_once "controller/cotizacion.controller.php";
 require_once "controller/fichaTecnica.controller.php";
 require_once "controller/fichaTrabajo.controller.php";
-
+require_once "controller/ingresoProd.controller.php";
+require_once "controller/almacenProductos.controller.php";
+require_once "controller/salidaProd.controller.php";
+require_once "controller/ingresoMprima.controller.php";
+require_once "controller/almacenMateriaPrima.controller.php";
+require_once "controller/salidaMprima.controller.php";
+require_once "controller/procesoOperativo.controller.php";
+require_once "controller/produccion.controller.php";
+require_once "controller/pedidos.controller.php";
 
 //+
 
@@ -32,6 +40,15 @@ require_once "model/categoriaProdMprima.model.php";
 require_once "model/cotizacion.model.php";
 require_once "model/fichaTecnica.model.php";
 require_once "model/fichaTrabajo.model.php";
+require_once "model/ingresoProd.model.php";
+require_once "model/almacenProductos.model.php";
+require_once "model/salidaProd.model.php";
+require_once "model/ingresoMprima.model.php";
+require_once "model/almacenMateriaPrima.model.php";
+require_once "model/salidaMprima.model.php";
+require_once "model/procesoOperativo.model.php";
+require_once "model/produccion.model.php";
+require_once "model/pedidos.model.php";
 
 //+
 
@@ -47,7 +64,15 @@ require_once "functions/productoMprima.functions.php";
 require_once "functions/categoriaProdMprima.functions.php";
 require_once "functions/cotizacion.functions.php";
 require_once "functions/fichaTecnica.functions.php";
-
+require_once "functions/fichaTrabajo.functions.php";
+require_once "functions/ingresoProd.functions.php";
+require_once "functions/almacenProductos.functions.php";
+require_once "functions/salidaProd.functions.php";
+require_once "functions/ingresoMprima.functions.php";
+require_once "functions/salidaMprima.functions.php";
+require_once "functions/procesoOperativo.functions.php";
+require_once "functions/produccion.functions.php";
+require_once "functions/pedidos.functions.php";
 //+
 $template = new TemplateController();
 $template -> ctrTemplate();

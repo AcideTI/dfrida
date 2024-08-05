@@ -17,7 +17,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == "ok") {
   echo '
       <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-          <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+          <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion" style="width: 245px;">
             <div class="sb-sidenav-menu" >
               <div class="nav">';
   include "modules/menu.php";
@@ -37,22 +37,24 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == "ok") {
       $_GET["ruta"] == "fichaTecnicaEdit" ||
       $_GET["ruta"] == "fichaTrabajo" ||
       $_GET["ruta"] == "fichaTrabajoList" ||
-      $_GET["ruta"] == "uploadFichaTecnica" ||
-      /*  $_GET["ruta"] == "ingresos" ||
-    $_GET["ruta"] == "nuevoIngreso" ||
-  $_GET["ruta"] == "almacen" ||
-$_GET["ruta"] == "notaPedido" ||
-$_GET["ruta"] == "editNotaPedido" ||
-$_GET["ruta"] == "editLote" ||
-$_GET["ruta"] == "nuevoLote" ||
-$_GET["ruta"] == "categorias" ||
-$_GET["ruta"] == "editarIngreso" ||
-$_GET["ruta"] == "verSalidas" ||
-$_GET["ruta"] == "nuevaDevolucion" ||
-$_GET["ruta"] == "mermas" ||
-$_GET["ruta"] == "visualizarIngreso" ||
-$_GET["ruta"] == "visualizarNotaPedido" ||
-$_GET["ruta"] == "visualizarLote" || */
+      $_GET["ruta"] == "fichaTrabajoEdit" ||
+      $_GET["ruta"] == "ingresoList" ||
+      $_GET["ruta"] == "ingresoProd" ||
+      $_GET["ruta"] == "ingresoProdEdit" ||
+      $_GET["ruta"] == "almacenProductos" ||
+      $_GET["ruta"] == "salidaList" ||
+      $_GET["ruta"] == "salidaProd" ||
+      $_GET["ruta"] == "salidaProdEdit" ||
+      $_GET["ruta"] == "ingresoMprimaList" ||
+      $_GET["ruta"] == "ingresoMprima" ||
+      $_GET["ruta"] == "ingresoMprimaEdit" ||
+      $_GET["ruta"] == "almacenMateriaPrima" ||
+      $_GET["ruta"] == "salidaMprimaList" ||
+      $_GET["ruta"] == "salidaMprima" ||
+      $_GET["ruta"] == "salidaMprimaEdit" ||
+      $_GET["ruta"] == "procesosOperativos" ||
+      $_GET["ruta"] == "produccionList" ||
+      $_GET["ruta"] == "pedidosList" ||
 
       $_GET["ruta"] == "signout"
     ) {
@@ -94,6 +96,15 @@ $_GET["ruta"] == "visualizarLote" || */
 <script src="dataTables/dt-cotizacion.js"></script>
 <script src="dataTables/dt-fichaTecnica.js"></script>
 <script src="dataTables/dt-fichaTrabajo.js"></script>
+<script src="dataTables/dt-ingresos.js"></script>
+<script src="dataTables/dt-almacenProductos.js"></script>
+<script src="dataTables/dt-salidas.js"></script>
+<script src="dataTables/dt-ingresosMprima.js"></script>
+<script src="dataTables/dt-almacenMateriaPrima.js"></script>
+<script src="dataTables/dt-salidasMprima.js"></script>
+<script src="dataTables/dt-procesoOperativo.js"></script>
+<script src="dataTables/dt-produccion.js"></script>
+<script src="dataTables/dt-pedidos.js"></script>
 
 
 <!-- funciones js -->
@@ -107,14 +118,16 @@ $_GET["ruta"] == "visualizarLote" || */
 <script src="js/cotizacion.js"></script>
 <script src="js/pdf.js"></script>
 <script src="js/fichaTecnica.js"></script>
-<!-- <script src="js/fichaTrabajo.js"></script> -->
+<script src="js/fichaTrabajo.js"></script>
+<script src="js/pdfFichasTrabajo.js"></script>
+<script src="js/ingresoProd.js"></script>
+<script src="js/salidaProd.js"></script>
+<script src="js/ingresoMprima.js"></script>
+<script src="js/salidaMprima.js"></script>
+<script src="js/procesoOperativo.js"></script>
+<script src="js/pedidos.js"></script>
 
-<!-- <script src="js/personal.js"></script> -->
-<!-- <script src="js/ingresos.js"></script> -->
-<!-- <script src="js/almacen.js"></script> -->
-<!-- <script src="js/notaPedido.js"></script> -->
-<!-- <script src="js/lotes.js"></script> -->
-<!-- <script src="js/datatable-salidas.js"></script> -->
+
 
 </body>
 

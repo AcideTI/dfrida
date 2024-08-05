@@ -3,7 +3,7 @@
 //hostin local
 
 /* class Conexion
-{
+ {
   static public function conn()
   {
     $link = new PDO("mysql:host=localhost;dbname=bd_dfrida","root","");
