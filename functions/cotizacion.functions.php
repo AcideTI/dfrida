@@ -28,10 +28,10 @@ class FunctionCotizacion
   {
     //  Estado de los Cotizacion 1 = Activo & 2 = Desactivado
     if ($stateValue == 1) {
-      $estado = '<span class="badge rounded-pill bg-warning">Sin Emitir</span>';
+      $estado = '<span class="badge rounded-pill bg-warning">Sin Asignar</span>';
     }
     if ($stateValue == 2) {
-      $estado = '<span class="badge rounded-pill bg-success">Emitido</span>';
+      $estado = '<span class="badge rounded-pill bg-success">Asignado</span>';
     }
     if ($stateValue > 3) {
       $estado = '<span class="badge rounded-pill bg-danger">Pendiente</span>';
@@ -41,15 +41,17 @@ class FunctionCotizacion
   }
 
   //botones Cotizacion
-  public static function getBtnCotizacion($codCoti)
+  public static function getBtnCotizacion($codCoti, $estadoCoti)
   {
     $botones = '
-     <button class="btn btn-dark btnDescargarCoti" codCoti="' . $codCoti . '"><i class="fa-solid fa-file-pdf"></i></button>
-    
-    <button class="btn btn-danger btnDeleteCotizacion" codCoti="' . $codCoti . '"><i class="fa-solid fa-trash"></i></button>
-    ';
+         <button class="btn btn-dark btnDescargarCoti" codCoti="' . $codCoti . '"><i class="fa-solid fa-file-pdf"></i></button>
+        <button class="btn btn-primary btnEditCotizacion" codCoti="' . $codCoti . '" ><i class="fa-solid fa-pencil"></i></button>
+        ';
+
+    // Evaluar si el estadoCoti es 2 para deshabilitar el botón de eliminar
+    $botones .= '<button class="btn btn-danger btnDeleteCotizacion" codCoti="' . $codCoti . '" ' . ($estadoCoti == 2 ? 'disabled' : '') . '><i class="fa-solid fa-trash"></i></button>';
+
     return $botones;
-    /* <button class="btn btn-warning btnEditCotizacion" codCoti="' . $codCoti . '" ><i class="fa-solid fa-pencil"></i></button> */
   }
   // Botones de Cotizacion para la vista de Pedidos
   public static function getBtnCotizacionPedidosVista($codCoti)

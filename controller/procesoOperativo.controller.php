@@ -437,7 +437,7 @@ class procesoOperativoController
       if ($statePedidoUpdate) {
         //crear registro de finalizacion de proceso operativo
         $createRegFinProceso = self::ctrRegistroProcOpFinalizado($codIniProcOp);
-
+        $createRegMerma = self::ctrRegistroMermaProcOp($codIniProcOp, $idSalMprima);
         if ($createRegFinProceso) {
           $table = "proceso_operativo";
           $dataUpdate = array(
@@ -447,9 +447,8 @@ class procesoOperativoController
           );
           $response = procesoOperativoModel::mdlFinalizarProcesoOperativo($table, $dataUpdate);
           return $response;
-        }
-        ;
-      } {
+        };
+      }else{
         return "errorActPedido";
       }
     } else {
@@ -490,6 +489,23 @@ class procesoOperativoController
     $response = procesoOperativoModel::mdlUltimoRegProcOpFin($table);
     return $response;
   }
+
+  //crear registro de merma ala finalizacion de proceso operativo
+  public static function ctrRegistroMermaProcOp($idProcOp, $idSalMprima)
+  {
+    $table = "merma";
+    $dataCreate = array(
+      "idProcOp" => $idProcOp,
+      "nombreMerma" => "Merma de proceso operativo Sin Aceptar",
+      "idSalMprima" => $idSalMprima,
+      "fechaMermaIng" => date("Y-m-d"),
+      "estadoMerma" => 1,//Sin Aceptar
+      "DateCreate" => date("Y-m-d\TH:i:sP"),
+    );
+    $response = procesoOperativoModel::mdlRegistroMermaProcOp($table, $dataCreate);
+    return $response;
+  }
+  //fin
   //actualziar estado de pedido a finalizado
   public static function ctrActualizarPedidoProcOpFin($idPedido)
   {
@@ -531,6 +547,51 @@ class procesoOperativoController
   {
     $table = "proceso_operativo";
     $response = procesoOperativoModel::mdlOptenerEstadoDeprocesoOp($table, $idProcOp);
+    return $response;
+  }
+
+  //finalizar proceso operativo modal estados
+  public static function ctrBtnFinalizarProcesoOperativo($idProcOpFin)
+  {
+    $idProcOp = $idProcOpFin["idProcOp"];
+    //funcion para finalizar proceso operativo 
+    $response = self::ctrFinalizarProcesoOperativo($idProcOp);
+    return $response;
+  }
+
+  //actualizar estado de proceso operativo modal estados
+  public static function ctrActualizarEstadoProcesoOperativo($dataActProcOp)
+  {
+    $table = "proceso_operativo";
+
+    $idProcOp = $dataActProcOp["codProcOpEst"];
+    $estadoProcOp = $dataActProcOp["estadoPrincipalProcOP"];
+    $fechaFinAct = $dataActProcOp["fechaFinProcOpEstate"];
+
+    $dataUpdate = array(
+      "fechaFinProcOp" => $fechaFinAct,
+      "idProcOp" => $idProcOp,
+      "estadoProcOp" => $estadoProcOp,
+      "DateUpdate" => date("Y-m-d\TH:i:sP"),
+    );
+    $response = procesoOperativoModel::mdlActualizarEstadoProcesoOperativo($table, $dataUpdate);
+    return $response;
+  }
+
+  //ver productos en proceso de confeccion
+  public static function ctrViewProdProcOpConfecion($codPed)
+  {
+    $table = "pedido";
+    $idPedido = $codPed;
+    $response = procesoOperativoModel::mdlViewProdProcOpConfecion($table, $idPedido);
+    return $response;
+  }
+
+  //obtener codigo de producto
+  public static function ctrObtenerCodigoProd($codProdCoti)
+  {
+    $table = "producto";
+    $response = procesoOperativoModel::mdlObtenerCodigoProd($table, $codProdCoti);
     return $response;
   }
   ///////////////////////////////////////////////////

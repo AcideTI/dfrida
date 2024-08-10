@@ -10,6 +10,13 @@ class CotizacionController
     $response = CotizacionModel::mdlDTableCotizaciones($table);
     return $response;
   }
+  // Mostrar todos las cotizaciones no asignadas
+  public static function ctrDTableCotizacionesSinAsignarPedidos()
+  {
+    $table = "cotizacion";
+    $response = CotizacionModel::mdlDTableCotizacionesSinAsignarPedidos($table);
+    return $response;
+  }
 
   // Crear nueva cotizacion
   public static function ctrCrearCotizacion($crearCotizacion, $jsonProductosCotizacion, $jsonProductosPrimaCotizacion)
@@ -118,7 +125,7 @@ class CotizacionController
   {
     $codCoti = $codCotiPdf["codCoti"];
     //cambiar estado de la cotizacion al descargar
-    $newEstadoCoti = self::ctrEstadoDescargaPdfCotizacion($codCoti);
+    //$newEstadoCoti = self::ctrEstadoDescargaPdfCotizacion($codCoti);
     $table = "cotizacion";
     $response = CotizacionModel::mdlDescargarPdfCotizacion($table, $codCoti);
 
@@ -130,6 +137,34 @@ class CotizacionController
   {
     $table = "cotizacion";
     $response = CotizacionModel::mdlEstadoDescargaPdfCotizacion($table, $codCoti);
+    return $response;
+  }
+  // cambiar el estado de cotizacion cuando se le asigne a un pedido
+  public static function ctrActualizarEstadoAsignacionCoti($codcoti, $estado)
+  {
+
+    $table = "cotizacion";
+    $dataActualizarEstado = array(
+      "idCoti" => $codcoti,
+      "estadoCoti" => $estado,
+      "DateUpdate" => date("Y-m-d\TH:i:sP"),
+    );
+    $response = CotizacionModel::mdlActualizarEstadoAsignacionCoti($table, $dataActualizarEstado);
+
+    return $response;
+  }
+  public static function ctrEditarCotizacion($jsonCotizacionEditar)
+  {
+    // Agregar la fecha actual en el formato requerido
+    $currentDateTime = date('Y-m-d H:i:s');
+    $jsonCotizacionEditar['DateUpdate'] = $currentDateTime;
+
+    // Convertir los datos de productsCoti y productsMprimaCoti a formato JSON
+    $jsonCotizacionEditar['productsCoti'] = json_encode($jsonCotizacionEditar['productsCoti']);
+    $jsonCotizacionEditar['productsMprimaCoti'] = json_encode($jsonCotizacionEditar['productsMprimaCoti']);
+
+    $table = "cotizacion";
+    $response = CotizacionModel::mdlEditarCotizacion($table, $jsonCotizacionEditar);
     return $response;
   }
 }

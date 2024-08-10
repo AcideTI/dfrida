@@ -7,9 +7,9 @@ class procesoOperativoModel
   //datatable de proceso Op
   public static function mdlDTableProcesosOperativos($table)
   {
-    $statement = Conexion::conn()->prepare("SELECT idProcOp, idTipoProc, idPedido, idSalMprima, descripcionProcOp, nombreProcOp, fechaRegistroProcOp, fechaInicioProcOp, fechaFinProcOp, estadoProcOp FROM $table ORDER BY idProcOp DESC");
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
+      $statement = Conexion::conn()->prepare("SELECT idProcOp, idTipoProc, idPedido, idSalMprima, descripcionProcOp, nombreProcOp, fechaRegistroProcOp, fechaInicioProcOp, fechaFinProcOp, estadoProcOp, DateUpdate FROM $table ORDER BY DateUpdate DESC, idProcOp DESC");
+      $statement->execute();
+      return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
   //data table tipos de procesos operativos
   public static function mdlDTableTiposProcesosOperativos($table)
@@ -395,19 +395,19 @@ class procesoOperativoModel
     $statement->execute();
     return $statement->fetch(PDO::FETCH_ASSOC);
   }
-   //registro de produccion
-    public static function mdlRegistrarProduccion($table, $dataCreate)
-    {
-      $statement = Conexion::conn()->prepare("INSERT INTO $table (idProcOpFin, estadoProduccion, DateCreate) VALUES(:idProcOpFin, :estadoProduccion, :DateCreate)");
-      $statement->bindParam(":idProcOpFin", $dataCreate["idProcOpFin"], PDO::PARAM_STR);
-      $statement->bindParam(":estadoProduccion", $dataCreate["estadoProduccion"], PDO::PARAM_STR);
-      $statement->bindParam(":DateCreate", $dataCreate["DateCreate"], PDO::PARAM_STR);
-      if ($statement->execute()) {
-        return true;
-      } else {
-        return false;
-      }
+  //registro de produccion
+  public static function mdlRegistrarProduccion($table, $dataCreate)
+  {
+    $statement = Conexion::conn()->prepare("INSERT INTO $table (idProcOpFin, estadoProduccion, DateCreate) VALUES(:idProcOpFin, :estadoProduccion, :DateCreate)");
+    $statement->bindParam(":idProcOpFin", $dataCreate["idProcOpFin"], PDO::PARAM_STR);
+    $statement->bindParam(":estadoProduccion", $dataCreate["estadoProduccion"], PDO::PARAM_STR);
+    $statement->bindParam(":DateCreate", $dataCreate["DateCreate"], PDO::PARAM_STR);
+    if ($statement->execute()) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
   //actualziar estado de pedido a finalizado
   public static function mdlActualizarPedidoProcOpFin($table, $dataUpdate)
@@ -455,6 +455,7 @@ class procesoOperativoModel
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
   }
+  //obtener estado de proceso operativo
   public static function mdlOptenerEstadoDeprocesoOp($table, $idProcOp)
   {
     $statement = Conexion::conn()->prepare("SELECT 
@@ -464,6 +465,60 @@ class procesoOperativoModel
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
+  }
+  //finalizar proceso operativo modal estados
+  public static function mdlActualizarEstadoProcesoOperativo($table, $dataUpdate)
+  {
+    $statement = Conexion::conn()->prepare("UPDATE $table SET estadoProcOp = :estadoProcOp, fechaFinProcOp = :fechaFinProcOp, DateUpdate = :DateUpdate WHERE idProcOp = :idProcOp");
+    $statement->bindParam(":estadoProcOp", $dataUpdate["estadoProcOp"], PDO::PARAM_INT);
+    $statement->bindParam(":idProcOp", $dataUpdate["idProcOp"], PDO::PARAM_INT);
+    $statement->bindParam(":fechaFinProcOp", $dataUpdate["fechaFinProcOp"], PDO::PARAM_STR);
+    $statement->bindParam(":DateUpdate", $dataUpdate["DateUpdate"], PDO::PARAM_STR);
+    if ($statement->execute()) {
+      return "ok";
+    } else {
+      return "error";
+    }
+  }
+
+  //ver productos en proceso de confeccion
+  public static function mdlViewProdProcOpConfecion($table, $idPedido)
+  {
+    $statement = Conexion::conn()->prepare(" SELECT 
+          c.productsCoti 
+          FROM $table p
+          INNER JOIN cotizacion c ON p.idCoti = c.idCoti
+          WHERE p.idPedido = :idPedido");
+    $statement->bindParam(":idPedido", $idPedido, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC);
+  }
+  //obtener codigo de producto
+  public static function mdlObtenerCodigoProd($table, $codProdCoti)
+  {
+    $statement = Conexion::conn()->prepare("SELECT 
+     codigoProd
+     FROM $table WHERE idProd = :idProd");
+    $statement->bindParam(":idProd", $codProdCoti, PDO::PARAM_INT);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  }
+  //crear registro de merma ala finalizacion de proceso operativo
+  public static function mdlRegistroMermaProcOp($table, $dataCreate)
+  {
+    $statement = Conexion::conn()->prepare("INSERT INTO $table (idProcOp, idSalMprima, nombreMerma, fechaMermaIng, estadoMerma, DateCreate) VALUES(:idProcOp, :idSalMprima, :nombreMerma, :fechaMermaIng, :estadoMerma, :DateCreate)");
+    $statement->bindParam(":idProcOp", $dataCreate["idProcOp"], PDO::PARAM_INT);
+    $statement->bindParam(":idSalMprima", $dataCreate["idSalMprima"], PDO::PARAM_INT);
+    $statement->bindParam(":nombreMerma", $dataCreate["nombreMerma"], PDO::PARAM_STR);
+    $statement->bindParam(":fechaMermaIng", $dataCreate["fechaMermaIng"], PDO::PARAM_STR);
+    $statement->bindParam(":estadoMerma", $dataCreate["estadoMerma"], PDO::PARAM_INT);
+    $statement->bindParam(":DateCreate", $dataCreate["DateCreate"], PDO::PARAM_STR);
+    if ($statement->execute()) {
+      return true;
+    } else {
+      return false;
+    }
   }
   //////////////////////////////////////////////////////
 }
