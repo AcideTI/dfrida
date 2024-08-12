@@ -9,7 +9,7 @@
 <div id="layoutSidenav_content">
   <main class="bg">
     <div class="container-fluid px-4">
-      <h1 class="mt-4">Lista de Producion</h1>
+      <h1 class="mt-4">Lista de Producctos terminados</h1>
       <ol class="breadcrumb mb-4">
         <!-- <li class="breadcrumb-item active">Todos los Usuarios</li> -->
       </ol>
@@ -106,7 +106,7 @@
                 <div class="form-group">
                   <label for="codProduccionAcept">Crear Ingreso a almacen</label>
                   <button type="button" class="btn btn-warning" id="codProduccionAcept" value="">
-                    Crear Ingreso
+                    Crear Ingreso Directo
                   </button>
                 </div>
               </div>
