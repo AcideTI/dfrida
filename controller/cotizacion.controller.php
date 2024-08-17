@@ -19,8 +19,11 @@ class CotizacionController
   }
 
   // Crear nueva cotizacion
-  public static function ctrCrearCotizacion($crearCotizacion, $jsonProductosCotizacion, $jsonProductosPrimaCotizacion)
+  public static function ctrCrearCotizacion($crearCotizacion, $jsonProductosCotizacion)
   {
+    // Guardar el valor de esClienteNuevo
+    $esClienteNuevo = $crearCotizacion["esClienteNuevo"];
+
     // Eliminar datos innecesarios
     $cotizacionData = self::ctrBorrarDatosInecesarios($crearCotizacion);
     // Eliminar el array $crearCotizacion para no duplicar datos
@@ -39,16 +42,28 @@ class CotizacionController
       "direccionCoti" => $cotizacionData["direccionCotiAdd"],
       "detalleCoti" => $cotizacionData["detalleCotiAdd"],
       "productsCoti" => $jsonProductosCotizacion,
-      "productsMprimaCoti" => $jsonProductosPrimaCotizacion,
       "totalProductsCoti" => $cotizacionData["totalProdCotiAdd"],
-      "totalProductsMprimaCoti" => $cotizacionData["totalProdMprimaCotiAdd"],
       "igvCoti" => $cotizacionData["igvCotizacionAdd"],
       "subTotalCoti" => $cotizacionData["subTotalCotizacionAdd"],
       "totalCoti" => $cotizacionData["totalCotizacionAdd"],
       "estadoCoti" => 1,
       "DateCreate" => date("Y-m-d\TH:i:sP"),
+      "esClienteNuevo" => $esClienteNuevo // Agregar el valor de esClienteNuevo
     );
     $response = CotizacionModel::mdlCrearCrearCotizacion($table, $dataCreate);
+    if ($response == "ok" && $esClienteNuevo == true) {
+      // Crear un nuevo cliente
+      $clienteNuevo = array(
+        "Ru" => $cotizacionData["rucCotiAdd"],
+        "razonSocial" => $cotizacionData["razonSocialCotiAdd"],
+        "NameCli" => $cotizacionData["nombreCotiAdd"],
+        "EmailCli" => $cotizacionData["correoCotiAdd"],
+        "AddressCli" => $cotizacionData["direccionCotiAdd"],
+        "PhoneCli" => $cotizacionData["celularCotiAdd"],
+        "DetallCli" => "Sin Observaciones",
+      );
+      $response = ClientsController::ctrCreateClient($clienteNuevo);
+    }
 
     return $response;
   }
@@ -63,12 +78,6 @@ class CotizacionController
     unset($crearCotizacion["unidadProdCoti"]);
     unset($crearCotizacion["cantidadProdCoti"]);
     unset($crearCotizacion["precioProdCoti"]);
-    //datos del primer producto prima ubicado por la funcion
-    unset($crearCotizacion["codProdMprimaCoti"]);
-    unset($crearCotizacion["nombreProdMprimaCoti"]);
-    unset($crearCotizacion["unidadProdMprimaCoti"]);
-    unset($crearCotizacion["cantidadProdMprimaCoti"]);
-    unset($crearCotizacion["precioProdMprimaCoti"]);
     $response = $crearCotizacion;
     return $response;
   }
@@ -161,7 +170,6 @@ class CotizacionController
 
     // Convertir los datos de productsCoti y productsMprimaCoti a formato JSON
     $jsonCotizacionEditar['productsCoti'] = json_encode($jsonCotizacionEditar['productsCoti']);
-    $jsonCotizacionEditar['productsMprimaCoti'] = json_encode($jsonCotizacionEditar['productsMprimaCoti']);
 
     $table = "cotizacion";
     $response = CotizacionModel::mdlEditarCotizacion($table, $jsonCotizacionEditar);

@@ -38,7 +38,7 @@
 </div>
 
 
-<!-- Modal productos ingresados-->
+<!-- Modal productos para registrarlos  ingresados-->
 <div class="modal fade" id="modalMateriaPrimaMerma" tabindex="-1" aria-labelledby="modalMateriaPrimaMerma"
   aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -102,5 +102,101 @@
 </div>
 <!-- fin modal de aceptar produccion -->
 
+<!-- modal de estados de procesos operativos en merma-->
+<div class="modal fade" id="modalEstadosProcesosOpMerma" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="modalEstadosProcesosOpMerma" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-center w-100" id="">Proceso Operativo Finalizado</h1>
+      </div>
+      <div class="modal-body" id="">
+        <div class="container">
+          <form id="formEstadosProcesosOp">
+            <div class="row">
+
+              <!--proceso operativo -->
+              <div class="col-md-12  mb-3">
+                <div class="form-group">
+                  <label for="nombrePorcesoOpNombreMerma">Proceso Operativo Asignado</label>
+                  <input type="text" class="form-control" id="nombrePorcesoOpNombreMerma"
+                    name="nombrePorcesoOpNombreMerma" disabled>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="fechaInicioProcOpMerma" class="form-label" style="font-weight: bold"> Fecha Inicio
+                  Proceso:</label>
+                <input type="date" class="form-control" id="fechaInicioProcOpMerma" name="fechaInicioProcOpMerma"
+                  disabled>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="fechaFinProcOpMerma" class="form-label" style="font-weight: bold"> Fecha Fin
+                  Proceso:</label>
+                <input type="date" class="form-control" id="fechaFinProcOpMerma" name="fechaFinProcOpMerma" disabled>
+              </div>
+
+              <!-- selec2 para tipos de procesos -->
+              <div class="col-md-12  mb-3">
+                <div class="form-group">
+                  <label for="tipoPorcesoOpNombreMerma">Tipo de proceso adjunto</label>
+                  <input type="text" class="form-control" id="tipoPorcesoOpNombreMerma"
+                    name="tipoPorcesoOpNombreMerma" disabled>
+                </div>
+              </div>
+
+
+              <div class="col-md-6  mb-3">
+                <div class="form-group">
+                  <label for="estadoPrincipalProcOPMerma">Estado proceso principal</label>
+                  <select class="form-select" id="estadoPrincipalProcOPMerma" name="estadoPrincipalProcOPMerma" disabled>
+                    <option value="1">Registrado</option>
+                    <option value="2">En proceso</option>
+                    <option value="3">Cuello de botella</option>
+                    <option value="4">Listo</option>
+                    <option value="5">Prenda Terminada</option>
+                    <option value="6">Retrasado</option>
+                  </select>
+                </div>
+              </div>
+          </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- fin modal/ -->
+
+<!-- Modal ver productos prima salidas del boton no tocar-->
+<div class="modal fade" id="modalProdMprimaMerma" tabindex="-1" aria-labelledby="modalProdMprimaMerma" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Productos Materia Prima  Mermados</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="procesosTrabajoModal">
+
+        <table id="DataTableProdMprimaMermados" class="display DataTableProdMprimaMermados">
+          <thead>
+            <!-- DataTableProdMprimaMermados -->
+          </thead>
+          <tbody>
+            <!--DataTableProdMprimaMermados-->
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin -->
 <!-- fin del div de bodyu -->
 </div>

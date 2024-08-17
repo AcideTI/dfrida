@@ -1382,6 +1382,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 //fin eliminar registro de salida prima
+
 //funcion para traer productos prima de pedido / cotizacion
 document.addEventListener("DOMContentLoaded", function () {
   var currentPath = window.location.pathname;
@@ -1450,7 +1451,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   var codPedidoSalMp = $(this).val();
                   //console.log("Valor seleccionado:", codPedidoSalMp);
                   // Aquí puedes agregar cualquier lógica adicional que necesites
-                  productosPrimaPedido(codPedidoSalMp);
+                  //productosPrimaPedido(codPedidoSalMp);
                 });
               },
               error: function (xhr, status, error) {

@@ -105,118 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 //fin agreagr productos a la cotizacion
 
-//agrergar productos prima a la cotizacion
-document.addEventListener("DOMContentLoaded", function () {
-  //si la ruta no es la correcta no se ejecuta la función
-  var currentPath = window.location.pathname;
-  var appPath = "/dfrida/cotizacion";
-  if (currentPath == appPath) {
-    //funcion para agregar productos prima a la cotizacion
-    // Definir un contador global para los IDs de formulario
-    var formularioProdMprimaCotiCounter = 1;
-
-    $(".dataTableProductosMprima").on(
-      "click",
-      ".btnAddProdMprimaModalCoti",
-      function () {
-        var codAddProdMprimaModalCoti = $(this).attr(
-          "codAddProdMprimaModalCoti"
-        );
-
-        var datos = new FormData();
-        datos.append("codAddProdMprimaModalCoti", codAddProdMprimaModalCoti);
-        $.ajax({
-          url: "ajax/cotizacion.ajax.php",
-          method: "POST",
-          data: datos,
-          cache: false,
-          contentType: false,
-          processData: false,
-          dataType: "json",
-          success: function (respuesta) {
-            var idMprima = respuesta["idMprima"];
-            var nombreMprima = respuesta["nombreMprima"];
-            var unidadMprima = respuesta["unidadMprima"];
-            var precioMprima = respuesta["precioMprima"];
-
-            // Crear un nuevo formulario para el producto prima con un ID único que incrementa en 1 cada vez que se agrega un producto prima
-            var formularioMprimaID =
-              "formularioProdMprimaCoti" + formularioProdMprimaCotiCounter++;
-            var nuevoProductoMprimaHTML =
-              '<form id="' +
-              formularioMprimaID +
-              '" class="row productoMprimaRow" style="padding:5px 15px">' +
-              '<div class="col-lg-4">' +
-              /* id del prodcuto prima */
-              '<input type="hidden" class="form-control" id="codProdMprimaCoti" value="' +
-              idMprima +
-              '">' +
-              /* nombre del producto prima */
-              '<input type="text" class="form-control" id="nombreProdMprimaCoti" value="' +
-              nombreMprima +
-              '" readonly>' +
-              "</div>" +
-              /* unidad del tipo de producto prima */
-              '<div class="col-lg-2">' +
-              '<input type="text" class="form-control" id="unidadProdMprimaCoti" value="' +
-              unidadMprima +
-              '" readonly>' +
-              "</div>" +
-              /* cantidad editable inicia en 1 */
-              '<div class="col-lg-2">' +
-              '<input type="number" class="form-control cantidadProdMprimaCoti" id="cantidadProdMprimaCoti" value="1" min="1" step="1">' +
-              "</div>" +
-              /* precio prima oculto */
-              '<input type="hidden" class="form-control precioProdMprimaCoti" id="precioProdMprimaCoti" value="' +
-              precioMprima +
-              '" data-original-precio="' +
-              precioMprima +
-              '" readonly>' +
-              /* boton de eliminar prima */
-              '<div class="col-lg-1">' +
-              '<button type="button" class="btn btn-danger btn-xs deleteNuevoIngresoProdMprima"><i class="fa fa-times"></i></button>' +
-              "</div>" +
-              "</form>";
-
-            // Agregar el nuevo formulario al contenedor
-            $(".AddProductoMprimaCotizacion").append(nuevoProductoMprimaHTML);
-          },
-        });
-      }
-    );
-
-    // Actualizar el precio cuando cambia la cantidad para productos prima
-    $(document).on("input", ".cantidadProdMprimaCoti", function () {
-      var count = $(this).val();
-      var precioPerUnitMprima = $(this)
-        .closest(".productoMprimaRow")
-        .find(".precioProdMprimaCoti")
-        .data("original-precio");
-      //si el valor del input es vacio o 0 el precio final es 0
-      if (count === "" || parseInt(count) === 0) {
-        var precioFinalMprima = "0";
-      } else {
-        var precioFinalMprima = (count * precioPerUnitMprima).toFixed(2);
-      }
-      // Actualizar el valor interno y el atributo 'value' en el HTML
-      $(this).val(count);
-      $(this).attr("value", count); // Actualiza el atributo 'value' en el HTML para la cantidad
-      $(this)
-        .closest(".productoMprimaRow")
-        .find(".precioProdMprimaCoti")
-        .val(precioFinalMprima) // Actualiza el valor interno para el precio
-        .attr("value", precioFinalMprima); // Actualiza el atributo 'value' en el HTML para el precio
-    });
-    // Eliminar el producto
-    $(document).on("click", ".deleteNuevoIngresoProdMprima", function () {
-      $(this).closest(".productoMprimaRow").remove();
-    });
-    //fin agregar productos a la cotizacion
-    //fin vericar ruta
-  }
-});
-//fin agregAr productos prima a la cotizacion
-
 // TOTALES DE LA COTIZACION
 document.addEventListener("DOMContentLoaded", function () {
   //si la ruta no es la correcta no se ejecuta la función
@@ -228,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
       function calcularTotalCotizacion() {
         //guarda el valor de los productos y productos prima en 0 para  sumar los precios
         let totalProductos = 0;
-        let totalProductosPrima = 0;
+        /* let totalProductosPrima = 0; */
         //busca todos los formularios que comiencen con formularioProdCoti = productos
         // Sumar los precios de todos los productos
         $("[id^=formularioProdCoti]").each(function () {
@@ -236,24 +124,11 @@ document.addEventListener("DOMContentLoaded", function () {
           //toma el valor del input con id precioProdCoti y lo convierte a float
           totalProductos += precio;
         });
-        //busca todos los formularios que comiencen con formularioProdMprimaCoti = productos prima
-        // Sumar los precios de todos los productos prima
-        $("[id^=formularioProdMprimaCoti]").each(function () {
-          const precio =
-            //toma el valor del input con id precioProdMprimaCoti y lo convierte a float
-            parseFloat($(this).find("#precioProdMprimaCoti").val()) || 0;
-          totalProductosPrima += precio;
-        });
 
         // Asignar el totalProducto al input de totalProdCotiAdd y actualizar el atributo 'value'
         $("#totalProdCotiAdd")
           .val(totalProductos.toFixed(2))
           .attr("value", totalProductos.toFixed(2));
-
-        // Asignar el totalProductoMprima al input de totalProdMprimaCotiAdd y actualizar el atributo 'value'
-        $("#totalProdMprimaCotiAdd")
-          .val(totalProductosPrima.toFixed(2))
-          .attr("value", totalProductosPrima.toFixed(2));
 
         // Calcular el total general
         const totalGeneral = totalProductos;
@@ -299,10 +174,9 @@ document.addEventListener("DOMContentLoaded", function () {
         //{ id: "igvCotizacionAdd", nombre: "IGV Cotización" },
         { id: "tituloCotiAdd", nombre: "Titulo cotizacion" },
         { id: "fechaCotiAdd", nombre: "Fecha cotizacion" },
-        { id: "nombreCotiAdd", nombre: "Nombre Solicitante" },
+        { id: "nombreCotiAdd", nombre: "Seleccione Cliente" },
         { id: "subTotalCotizacionAdd", nombre: "Sub Total Cotización" },
         { id: "totalProdCotiAdd", nombre: "Total Producto" },
-        { id: "totalProdMprimaCotiAdd", nombre: "Total Producto Prima" },
         { id: "totalCotizacionAdd", nombre: "Total Cotización" },
       ];
       let formularioValido = true;
@@ -344,20 +218,23 @@ document.addEventListener("DOMContentLoaded", function () {
             datosFormulario[elemento.id] = elemento.value;
           }
         });
+        // Obtener el estado del switch
+        var clienteNuevoSwitch = document.getElementById("clienteNuevoSwitch");
+        var esClienteNuevo = clienteNuevoSwitch.checked;
+
+        // Agregar el estado del switch a los datos del formulario
+        datosFormulario.esClienteNuevo = esClienteNuevo;
+
         // Crear un JSON con los datos recolectados del formulario principal
         var jsonCrearCotizacion = JSON.stringify(datosFormulario);
 
         // Llamada a la función para recolectar datos de formularios anidados PRODUCTOS y PRODUCTOS PRIMA
         recojerFormulariosAnidadosProductosYprima(function (
-          datosFormulariosProductos,
-          datosFormulariosProductosPrima
+          datosFormulariosProductos
         ) {
           // Crear un JSON con los datos recolectados de los formularios anidados
           var jsonProductosCotizacion = JSON.stringify(
             datosFormulariosProductos
-          );
-          var jsonProductosPrimaCotizacion = JSON.stringify(
-            datosFormulariosProductosPrima
           );
 
           $.ajax({
@@ -367,7 +244,6 @@ document.addEventListener("DOMContentLoaded", function () {
             data: {
               jsonCrearCotizacion: jsonCrearCotizacion,
               jsonProductosCotizacion: jsonProductosCotizacion,
-              jsonProductosPrimaCotizacion: jsonProductosPrimaCotizacion,
             },
             dataType: "json",
             success: function (response) {
@@ -445,7 +321,6 @@ document.addEventListener("DOMContentLoaded", function () {
         function recojerFormulariosAnidadosProductosYprima(callback) {
           //alamcena los datos de los formularios productos y productos prima
           let datosFormulariosProductos = {};
-          let datosFormulariosProductosPrima = {};
 
           // Recorrer los formularios de productos
           $("[id^=formularioProdCoti]").each(function (index) {
@@ -460,23 +335,9 @@ document.addEventListener("DOMContentLoaded", function () {
             datosFormulariosProductos["producto" + index] = datosFormulario;
           });
 
-          // Recorrer los formularios de productos prima
-          $("[id^=formularioProdMprimaCoti]").each(function (index) {
-            let datosFormulario = {};
-            $(this)
-              .find("input, select")
-              .each(function () {
-                if (this.id) {
-                  datosFormulario[this.id] = $(this).val();
-                }
-              });
-            datosFormulariosProductosPrima["productoPrima" + index] =
-              datosFormulario;
-          });
-
           // Llamar al callback con los datos recolectados de ambos formularios
           if (callback && typeof callback === "function") {
-            callback(datosFormulariosProductos, datosFormulariosProductosPrima);
+            callback(datosFormulariosProductos);
           }
         }
         //fin agregar productos a la cotizacion
@@ -610,3 +471,308 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 // Fin
+// Insertar las opciones de los clientes en el select
+//funcion para mostrar el selec2 de todos los clientes
+document.addEventListener("DOMContentLoaded", function () {
+  // Verificar si la ruta es la correcta
+  var currentPath = window.location.pathname;
+  var appPath = "/dfrida/cotizacion";
+  if (currentPath == appPath) {
+    // Inicializar select2 en el select deseado
+    $("#idClienteAddCotizacion").select2({
+      placeholder: "Seleccione un Cliente",
+      allowClear: true,
+    });
+    // Cargar datos dinámicamente al abrir el modal
+    var data = new FormData();
+    data.append("todosLosClientes", true);
+
+    $.ajax({
+      url: "ajax/clients.ajax.php",
+      method: "POST",
+      data: data,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (data) {
+        // Limpiar las opciones actuales
+        $("#idClienteAddCotizacion").empty();
+        // Agregar las nuevas opciones
+        $.each(data, function (key, value) {
+          $("#idClienteAddCotizacion").append(
+            '<option value="' +
+              value.idCli +
+              '" data-celular="' +
+              value.celularCli +
+              '" data-correo="' +
+              value.correoCli +
+              '" data-direccion="' +
+              value.direccionCli +
+              '">' +
+              value.nombreCli +
+              "</option>"
+          );
+        });
+
+        // Restaurar el valor seleccionado si existe
+        var selectedCliente = $("#idClienteAddCotizacion").attr(
+          "data-selected"
+        );
+        if (selectedCliente && selectedCliente !== "0") {
+          $("#idClienteAddCotizacion").val(selectedCliente).trigger("change");
+        } else {
+          // Inicializar el select con la opción predeterminada
+          $("#idClienteAddCotizacion").val("0").trigger("change");
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Error al cargar los datos:", error);
+      },
+    });
+    // Añadir el evento change al select
+    $("#idClienteAddCotizacion").on("change", function () {
+      var selectedOption = $(this).find("option:selected");
+
+      if (selectedOption && selectedOption.val() !== "0") {
+        var nombreCli = selectedOption.text();
+        var celularCli = selectedOption.data("celular");
+        var correoCli = selectedOption.data("correo");
+        var direccionCli = selectedOption.data("direccion");
+
+        $("#nombreCotiAdd").val(nombreCli);
+        $("#celularCotiAdd").val(celularCli);
+        $("#correoCotiAdd").val(correoCli);
+        $("#direccionCotiAdd").val(direccionCli);
+        $("#detalleCotiAdd").val(""); // Dejar en blanco
+      } else {
+        // Limpiar los campos de texto si no hay una opción válida seleccionada
+        $("#nombreCotiAdd").val("");
+        $("#celularCotiAdd").val("");
+        $("#correoCotiAdd").val("");
+        $("#direccionCotiAdd").val("");
+        $("#detalleCotiAdd").val("");
+      }
+    });
+  }
+});
+
+// Manejo del switch para cuando es cliente nuevo o cuando ya está creado el cliente:
+document.addEventListener("DOMContentLoaded", function () {
+  // Verificar si la ruta es la correcta
+  var currentPath = window.location.pathname;
+  var appPath = "/dfrida/cotizacion";
+  if (currentPath == appPath) {
+    var clienteNuevoSwitch = document.getElementById("clienteNuevoSwitch");
+    var clienteNuevoSection = document.getElementById("clienteNuevoSection");
+    var datosSolicitanteSection = document.getElementById(
+      "datosSolicitanteSection"
+    );
+    var idClienteAddCotizacion = document.getElementById(
+      "idClienteAddCotizacion"
+    );
+    var nombreCotiAdd = document.getElementById("nombreCotiAdd");
+    var celularCotiAdd = document.getElementById("celularCotiAdd");
+    var correoCotiAdd = document.getElementById("correoCotiAdd");
+    var direccionCotiAdd = document.getElementById("direccionCotiAdd");
+    var detalleCotiAdd = document.getElementById("detalleCotiAdd");
+
+    var previousSelectedCliente = null;
+
+    // Función para alternar la visibilidad y limpiar los campos
+    function toggleVisibility() {
+      if (clienteNuevoSwitch.checked) {
+        clienteNuevoSection.style.display = "none";
+        datosSolicitanteSection.style.display = "block";
+        // Guardar el valor seleccionado antes de limpiar
+        previousSelectedCliente = idClienteAddCotizacion.value;
+        // Limpiar el select
+        idClienteAddCotizacion.value = "";
+        // Limpiar los campos de texto
+        nombreCotiAdd.value = "";
+        celularCotiAdd.value = "";
+        correoCotiAdd.value = "";
+        direccionCotiAdd.value = "";
+        detalleCotiAdd.value = "";
+      } else {
+        clienteNuevoSection.style.display = "block";
+        datosSolicitanteSection.style.display = "none";
+        // Restaurar el valor seleccionado
+        if (previousSelectedCliente) {
+          idClienteAddCotizacion.value = previousSelectedCliente;
+        } else {
+          idClienteAddCotizacion.value = "0";
+        }
+        // Limpiar los campos de texto
+        nombreCotiAdd.value = "";
+        celularCotiAdd.value = "";
+        correoCotiAdd.value = "";
+        direccionCotiAdd.value = "";
+        detalleCotiAdd.value = "";
+        // Limpiar el select y mostrar el placeholder
+        $(idClienteAddCotizacion).val(null).trigger("change");
+      }
+    }
+
+    // Inicializar la visibilidad al cargar la página
+    toggleVisibility();
+
+    // Añadir el evento change al switch
+    clienteNuevoSwitch.addEventListener("change", toggleVisibility);
+  }
+});
+
+// Función para mostrar el select2 de todas las categorías
+document.addEventListener("DOMContentLoaded", function () {
+  $("#modalAddProductoNuevoCotizacion").on("shown.bs.modal", function () {
+    // Verificar si la ruta es la correcta
+    var currentPath = window.location.pathname;
+    var appPath = "/dfrida/cotizacion";
+    if (currentPath == appPath) {
+      // Inicializar Select2 para categorías
+      $("#productCategory").select2({
+        dropdownParent: $("#modalAddProductoNuevoCotizacion"), // Asegurarse de que el dropdown se muestre dentro del modal
+      });
+
+      // Cargar datos dinámicamente al abrir el modal
+      var data = new FormData();
+      data.append("todasLasCategorias", true);
+
+      $.ajax({
+        url: "ajax/products.ajax.php",
+        method: "POST",
+        data: data,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (data) {
+          // Limpiar las opciones actuales
+          $("#productCategory").empty();
+          $("#productCategory").append(
+            '<option value="0">Seleccione una Categoría</option>'
+          );
+          // Agregar las nuevas opciones
+          $.each(data, function (key, value) {
+            $("#productCategory").append(
+              '<option value="' +
+                value.idCatPro +
+                '">' +
+                value.nombreCategoriaProd +
+                "</option>"
+            );
+          });
+
+          // Restaurar el valor seleccionado si existe
+          var selectedCategory = $("#productCategory").attr("data-selected");
+          if (selectedCategory) {
+            $("#productCategory").val(selectedCategory).trigger("change");
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("Error al cargar las categorías:", error);
+        },
+      });
+    }
+  });
+});
+// Fin
+
+// Función para mostrar el select2 de todas las categorías EN EDTIAR COTIZACION
+document.addEventListener("DOMContentLoaded", function () {
+  $("#modalAddProductoNuevoEditarCotizacion").on("shown.bs.modal", function () {
+    // Verificar si la ruta es la correcta
+    var currentPath = window.location.pathname;
+    var appPath = "/dfrida/cotizacionListEdit";
+    if (currentPath == appPath) {
+      // Inicializar Select2 para categorías
+      $("#productCategory").select2({
+        dropdownParent: $("#modalAddProductoNuevoEditarCotizacion"), // Asegurarse de que el dropdown se muestre dentro del modal
+      });
+
+      // Cargar datos dinámicamente al abrir el modal
+      var data = new FormData();
+      data.append("todasLasCategorias", true);
+
+      $.ajax({
+        url: "ajax/products.ajax.php",
+        method: "POST",
+        data: data,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (data) {
+          // Limpiar las opciones actuales
+          $("#productCategory").empty();
+          $("#productCategory").append(
+            '<option value="0">Seleccione una Categoría</option>'
+          );
+          // Agregar las nuevas opciones
+          $.each(data, function (key, value) {
+            $("#productCategory").append(
+              '<option value="' +
+                value.idCatPro +
+                '">' +
+                value.nombreCategoriaProd +
+                "</option>"
+            );
+          });
+
+          // Restaurar el valor seleccionado si existe
+          var selectedCategory = $("#productCategory").attr("data-selected");
+          if (selectedCategory) {
+            $("#productCategory").val(selectedCategory).trigger("change");
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("Error al cargar las categorías:", error);
+        },
+      });
+    }
+  });
+});
+// Fin
+
+// Funcionalidad Modales
+document.addEventListener("DOMContentLoaded", function () {
+  var currentPath = window.location.pathname;
+  var appPath = "/dfrida/cotizacion";
+  if (currentPath == appPath) {
+    // guardar los codigos de los productos agregados
+
+    $("#modalAddProdCoti").on(
+      "click",
+      "#btnAgregarProductAddCotizacion",
+      function () {
+        // Abrir el modal
+        $("#modalAddProdCoti").modal("hide");
+        $("#modalAddProductoNuevoCotizacion").modal("show");
+      }
+    );
+    $("#modalAddProductoNuevoCotizacion").on(
+      "click",
+      "#btnCerrarCreacionProductoNuevo",
+      function () {
+        $("#modalAddProductoNuevoCotizacion").modal("hide");
+        $("#modalAddProdCoti").modal("show");
+      }
+    );
+    $("#modalAddProdCoti").on(
+      "click",
+      "#btnAgregarCategoriaProductAddCotizacion",
+      function () {
+        // Abrir el modal
+        $("#modalAddProdCoti").modal("hide");
+        var formulario = document.getElementById("formCrearCategoriaProd");
+        formulario.reset();
+        $("#modalCrearCategoriaProdCotizacion").modal("show");
+      }
+    );
+    $("#modalCrearCategoriaProdCotizacion").on(
+      "click",
+      "#btnCerrarCrearCategoriaCotizacion",
+      function () {
+        $("#modalCrearCategoriaProdCotizacion").modal("hide");
+        $("#modalAddProdCoti").modal("show");
+      }
+    );
+  }
+});
