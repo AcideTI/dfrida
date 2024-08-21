@@ -58,6 +58,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == "ok") {
       $_GET["ruta"] == "merma" ||
       $_GET["ruta"] == "cotizacionListEdit" ||
       $_GET["ruta"] == "productoMerma" ||
+      $_GET["ruta"] == "productoMermaList" ||
       $_GET["ruta"] == "signout"
     ) {
       include "modules/" . $_GET["ruta"] . ".php";
@@ -108,6 +109,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == "ok") {
 <script src="dataTables/dt-produccion.js"></script>
 <script src="dataTables/dt-pedidos.js"></script>
 <script src="dataTables/dt-merma.js"></script>
+<script src="dataTables/dt-productoMerma.js"></script>
 
 
 <!-- funciones js -->
