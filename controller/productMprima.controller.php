@@ -116,7 +116,7 @@ class ProductMprimaController
   //verificar si el ProductosMprima esta en alamacen
   public static function ctrAlmacenMpProductStock($codProductMp)
   {
-    $table = "alamcen_mprima";
+    $table = "almacen_mprima";
     $response = ProductMprimaModel::mdlAlmacenMpProductStock($table, $codProductMp);
     return $response;
   }
