@@ -92,6 +92,7 @@ class ProductMprimaController
         'detalleMprima' => $editarProductosMprima['editProductDetailMp'],
         'unidadMprima' => $editarProductosMprima['editProductUnitMp'],
         'precioMprima' => $editarProductosMprima['editProductPriceMp'],
+        "idProv" => $editarProductosMprima["provedoresMpEdit"],
         'DateUpdate' => date("Y-m-d\TH:i:sP"),
       );
 
@@ -116,7 +117,7 @@ class ProductMprimaController
   //verificar si el ProductosMprima esta en alamacen
   public static function ctrAlmacenMpProductStock($codProductMp)
   {
-    $table = "almacen_mprima";
+    $table = "alamcen_mprima";
     $response = ProductMprimaModel::mdlAlmacenMpProductStock($table, $codProductMp);
     return $response;
   }

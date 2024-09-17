@@ -29,18 +29,18 @@
             placeholder="Ingrese el nombre del proceso">
         </div>
 
-        <div class="col-md-6">
-          <label for="productoFichaProcAdd" class="form-label" style="font-weight: bold"> Producto Proceso:</label>
-          <input type="text" class="form-control" id="productoFichaProcAdd" name="productoFichaProcAdd"
-            placeholder="Ingrese un producto/otro a procesar">
+        <!-- producto -->
+        <div class="col-md-6" id="prodFichProcTrab">
+
         </div>
+        
         <!-- Utiliza CSS para agregar espacio entre los divs -->
         <div style="height: 20px;"></div> <!-- Ajusta el valor de height según necesites -->
 
         <div class="col-md-12" style="margin-bottom: 10px;">
           <label for="detalleFichaProcAdd" class="form-label" style="font-weight: bold">Observaciones: </label>
           <textarea class="form-control" id="detalleFichaProcAdd" name="detalleFichaProcAdd"
-            placeholder="Ingrese observacion para el proceso de trabajo Opcional" rows="4"></textarea>
+            placeholder="Ingrese observación para el proceso de trabajo Opcional" rows="4"></textarea>
         </div>
         <!-- fin -->
       </div>
@@ -56,10 +56,10 @@
         <div class="row" style="font-weight: bold">
           <div class="col-lg-4">Proceso</div>
           <div class="col-lg-2">Tiempo</div>
-          <div class="col-lg-4">Observacion</div>
+          <div class="col-lg-4">Observación</div>
         </div>
-      
-         <!-- aqui se agregan los procesos del modal de procesos  -->
+
+        <!-- aqui se agregan los procesos del modal de procesos  -->
         <div class="form-group row AddProcesoTrabajo">
 
           <!-- aqui se agregan los procesos selecionado del modal de procesos  -->

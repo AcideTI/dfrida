@@ -21,12 +21,12 @@
         <span style="margin-right: 10px;"></span>
         <!-- Button  modal  ver lista categorias-->
         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalViewCatProd">
-          Ver todas las Categorias Producto
+          Ver todas las Categorías Producto
         </button>
         <span style="margin-right: 10px;"></span>
         <!-- Button  modal  crear categoria-->
         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalCrearCategoriaProd">
-          Crear Categoria Producto
+          Crear Categoría Producto
         </button>
       </div>
       <!--  -->
@@ -76,28 +76,19 @@
           </div>
 
           <!-- Categoría -->
-          <div class="form-group">
-            <label for="productCategory" class="col-form-label">Categoría:</label>
-            <select class="form-control" name="productCategory" id="productCategory">
-              <?php
-              $categoryList = ProductsController::ctrGetAllCategories();
-              foreach ($categoryList as $key => $value) {
-                echo '<option value="' . $value["idCatPro"] . '">' . $value["nombreCategoriaProd"] . '</option>';
-              }
-              ?>
-            </select>
+          <div class="form-group" id="productCategoryContainer">
           </div>
-
           <!-- Codigo Producto -->
           <div class="form-group">
-            <label for="productCodigo" class="col-form-label">Codigo Producto:</label>
+            <label for="productCodigo" class="col-form-label">Código Producto:</label>
             <input type="text" class="form-control" id="productCodigo" name="productCodigo" required>
           </div>
 
           <!-- Unidad -->
           <div class="form-group">
             <label for="productUnit" class="col-form-label">Unidad:</label>
-            <input type="text" class="form-control" id="productUnit" name="productUnit" value="" placeholder="1/Uni/Docena/etc" required>
+            <input type="text" class="form-control" id="productUnit" name="productUnit" value=""
+              placeholder="1/Uni/Docena/etc" required>
           </div>
 
           <!-- Precio -->
@@ -108,7 +99,7 @@
 
           <!-- Detalle Producto -->
           <div class="form-group">
-            <label for="productDetail" class="col-form-label">Observacion del Producto:</label>
+            <label for="productDetail" class="col-form-label">Observación del Producto:</label>
             <input type="text" class="form-control" id="productDetail" name="productDetail">
           </div>
 
@@ -142,16 +133,7 @@
             </div>
 
             <!-- categoria producto -->
-            <div class="form-group">
-              <label for="editProductCategory" class="col-form-label">Categoría:</label>
-              <select class="form-control" name="editProductCategory" id="editProductCategory">
-                <?php
-                $categoryList = ProductsController::ctrGetAllCategories();
-                foreach ($categoryList as $key => $value) {
-                  echo '<option value="' . $value["idCatPro"] . '">' . $value["nombreCategoriaProd"] . '</option>';
-                }
-                ?>
-              </select>
+            <div class="form-group" id="productCategoryContainerEdit">
             </div>
 
             <!-- Codigo Producto -->
@@ -224,7 +206,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="modalViewCatProd">Lista Categorias</h1>
+        <h1 class="modal-title fs-5" id="modalViewCatProd">Lista Categorías</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -265,7 +247,7 @@
         </form>
       </div>
       <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="btnCerrarEditarCategoriaProd"
+        <button type="button" class="btn btn-secondary" id="btnCerrarEditarCategoriaProd"
           data-bs-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" id="btnEditarCategoriaProd">Editar Categoria</button>
       </div>

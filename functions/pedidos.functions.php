@@ -4,7 +4,7 @@ class FunctionPedidos
   //  Estados de los pedidos
   public static function getEstadoPedido($stateValue)
   {
-    //  Estado de los Pedidos
+    // Estado de los Pedidos
     if ($stateValue == 2) {
       $estado = '<span class="badge rounded-pill bg-primary">Asignado</span>';
     }
@@ -14,6 +14,9 @@ class FunctionPedidos
     if ($stateValue == 3) {
       $estado = '<span class="badge rounded-pill bg-success">Finalizado</span>';
     }
+    if ($stateValue == 4) {
+      $estado = '<span class="badge rounded-pill bg-info">Entregado</span>';
+    }
     return $estado;
   }
 
@@ -21,7 +24,7 @@ class FunctionPedidos
   public static function getBtnPedido($idPedido, $estadoPedido, $idCoti)
   {
     // Deshabilitar si el estado del pedido es 2 o 3
-    $disabled = ($estadoPedido == 2 || $estadoPedido == 3) ? 'disabled' : '';
+    $disabled = ($estadoPedido == 2 || $estadoPedido == 3 || $estadoPedido == 4) ? 'disabled' : '';
     $botones = '
         <button class="btn btn-primary btnEditarPedido" idPedido="' . $idPedido . '" ' . $disabled . '><i class="fa-solid fa-pencil"></i></button>
         <button class="btn btn-danger btnDeletePedido" idPedido="' . $idPedido . '" idCoti = "' . $idCoti . '" ' . $disabled . '><i class="fa-solid fa-trash"></i></button>

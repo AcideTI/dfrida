@@ -29,18 +29,18 @@
             placeholder="Ingrese el nombre del proceso">
         </div>
 
-        <div class="col-md-6">
-          <label for="productoFichaProcEdit" class="form-label" style="font-weight: bold"> Producto Proceso:</label>
-          <input type="text" class="form-control" id="productoFichaProcEdit" name="productoFichaProcEdit"
-            placeholder="Ingrese un producto/otro a procesar">
+        <!-- producto -->
+        <div class="col-md-6" id="prodFichProcTrabEdit">
+
         </div>
+
         <!-- Utiliza CSS para agregar espacio entre los divs -->
         <div style="height: 20px;"></div> <!-- Ajusta el valor de height según necesites -->
 
         <div class="col-md-12" style="margin-bottom: 10px;">
           <label for="detalleFichaProcEdit" class="form-label" style="font-weight: bold">Observaciones: </label>
           <textarea class="form-control" id="detalleFichaProcEdit" name="detalleFichaProcEdit"
-            placeholder="Ingrese observacion para el proceso de trabajo Opcional" rows="4"></textarea>
+            placeholder="Ingrese observación para el proceso de trabajo Opcional" rows="4"></textarea>
         </div>
         <!-- fin -->
       </div>
@@ -56,7 +56,7 @@
         <div class="row" style="font-weight: bold">
           <div class="col-lg-4">Proceso</div>
           <div class="col-lg-2">Tiempo</div>
-          <div class="col-lg-4">Observacion</div>
+          <div class="col-lg-4">Observación</div>
         </div>
 
         <!-- aqui se agregan los procesos del modal de procesos  -->
@@ -74,8 +74,8 @@
       <div class="container row g-3 p-3 ">
         <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-danger" style="margin-right: 10px;"
           id="btnCerrarFichaTrabajoEdit">Cerrar</button>
-        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-success "
-          id="btnEditarFichaTrabajo">Editar Ficha Trabajo</button>
+        <button type="button" class="col-2 d-inline-flex-center p-2 btn btn-success " id="btnEditarFichaTrabajo">Editar
+          Ficha Trabajo</button>
       </div>
     </form>
   </main>
