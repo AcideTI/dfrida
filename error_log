@@ -1,0 +1,118 @@
+[17-Sep-2024 15:52:27 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:52:27 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:52:28 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:52:28 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:52:31 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:52:31 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:52:32 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:52:32 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:53:10 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:53:10 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:53:10 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:53:10 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:53:11 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:53:11 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:53:50 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:53:50 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:53:50 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:53:50 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:55:19 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:55:19 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:55:24 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:55:24 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:58:16 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:58:16 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:58:16 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:58:16 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:59:54 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:59:54 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:59:54 America/Bogota] PHP Warning:  require_once(controller/productoMerma.controller.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[17-Sep-2024 15:59:54 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'controller/productoMerma.controller.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/pruebasbetaacide/public_html/dfrida/index.php on line 29
+[27-Sep-2024 11:15:32 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:15:32 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:15:40 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:15:40 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:15:46 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:15:46 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:20:50 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:20:50 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:21:20 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:21:20 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:21:28 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:21:28 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:24:57 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:24:57 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:35:48 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:35:48 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:36:23 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 11:36:23 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 13:19:26 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 13:19:26 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 13:20:22 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 13:20:22 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 13:26:21 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 13:26:21 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 14:47:29 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 14:47:29 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 15:12:49 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[27-Sep-2024 15:12:49 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[16-Dec-2024 11:18:01 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[16-Dec-2024 11:18:01 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[16-Dec-2024 11:18:01 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[16-Dec-2024 11:18:08 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[16-Dec-2024 11:18:08 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[16-Dec-2024 11:18:08 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[06-Jan-2025 10:51:22 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[06-Jan-2025 10:51:22 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[06-Jan-2025 10:51:22 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[06-Jan-2025 13:03:34 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[06-Jan-2025 13:03:34 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[06-Jan-2025 13:03:34 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[06-Jan-2025 13:22:03 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[06-Jan-2025 13:22:03 America/Bogota] PHP Warning:  include(modules/productoMerma.php): Failed to open stream: No such file or directory in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
+[06-Jan-2025 13:22:03 America/Bogota] PHP Warning:  include(): Failed opening 'modules/productoMerma.php' for inclusion (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/pruebasbetaacide/public_html/dfrida/view/template.php on line 64
