@@ -1054,6 +1054,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document
       .getElementById("btnRegistrarProdMerma")
       .addEventListener("click", function (event) {
+        event.preventDefault();
         // calcular el total de la merma
         calcularTotalProdMerma();
         //ubicar formulario de merma para agregar el codigo de merma cada vez que se modifique el dato de cantidad
@@ -1224,7 +1225,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var currentPath = window.location.pathname;
   var appPath = "/dfrida/productoMermaList";
   if (currentPath == appPath) {
-    var btn = document.getElementById("btnRegistrarProdMerma");
+    var btn = document.getElementById("btnRegistrarProdMermaL");
     if (btn) {
       btn.addEventListener("click", function () {
         window.location.href = "/dfrida/productoMerma";
