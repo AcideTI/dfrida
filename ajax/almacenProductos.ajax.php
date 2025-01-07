@@ -14,12 +14,6 @@ if (isset($_POST["todosLosProductosAlmacen"])) {
   $todosLosProductosAlmacen->ajaxDTableAlmacenProductos();
 }
 
-//  Descargar PDF de la cotizacion
-if (isset($_POST["jsonPdfCotizacion"])) {
-  $pdf = new AlmacenProductosAjax();
-  $pdf->jsonPdfCotizacion = $_POST["jsonPdfCotizacion"];
-  $pdf->ajaxDescargarPdfCotizacion($_POST["jsonPdfCotizacion"]);
-}
 /////////////////////////////
 
 class AlmacenProductosAjax
@@ -30,7 +24,6 @@ class AlmacenProductosAjax
     $todosLosProductosAlmacen = almacenProductosController::ctrDTableAlmacenProductos();
     foreach ($todosLosProductosAlmacen as &$almacen) {
       // Realiza la multiplicación normalmente
-      $almacen['totalProdAlma'] = $almacen["precioProdAlma"] * $almacen["cantidadProdAlma"];
       // Si cantidadProdAlma es negativo, asegura que el totalProdAlma también lo sea
       if ($almacen["cantidadProdAlma"] < 0) {
         $almacen['totalProdAlma'] = -abs($almacen['totalProdAlma']);
@@ -40,13 +33,6 @@ class AlmacenProductosAjax
   
     echo json_encode($todosLosProductosAlmacen);
   }
-
-  //  Descargar PDF de la cotizacion
-  public function ajaxDescargarPdfCotizacion($jsonPdfCotizacion)
-  {
-    $codCotiPdf = json_decode($jsonPdfCotizacion, true); // Decodificar la cadena de texto JSON en un array asociativo
-    $response = almacenProductosController::ctrDescargarPdfCotizacion($codCotiPdf);
-    echo json_encode($response);
-  }
 }
+
 

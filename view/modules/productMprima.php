@@ -95,9 +95,30 @@
           <!-- Unidad -->
           <div class="form-group">
             <label for="productUnitMp" class="col-form-label">Unidad:</label>
-            <input type="text" class="form-control" id="productUnitMp" name="productUnitMp"
-              placeholder="1/Metros/Uni/etc" required>
+            <select class="form-control" id="productUnitMpSelect" name="productUnitMpSelect" required>
+              <option value="METROS">METROS</option>
+              <option value="UNIDAD">UNIDAD</option>
+              <option value="CENTIMETROS">CENTIMETROS</option>
+              <option value="OTRO">Otro</option>
+            </select>
+            <input type="text" class="form-control mt-2" id="productUnitMp" name="productUnitMp" placeholder="Especificar unidad" style="display: none;">
           </div>
+
+          <script>
+            document.getElementById('productUnitMpSelect').addEventListener('change', function() {
+              var select = this;
+              var input = document.getElementById('productUnitMp');
+              if (select.value === 'OTRO') {
+                input.style.display = 'block';
+                input.required = true;
+                input.value = ''; // Clear the input value
+              } else {
+                input.style.display = 'none';
+                input.required = false;
+                input.value = select.value; // Set the input value to the selected option
+              }
+            });
+          </script>
 
           <!-- Precio -->
           <div class="form-group">
@@ -159,8 +180,47 @@
             <!-- Unidad -->
             <div class="form-group">
               <label for="editProductUnitMp" class="col-form-label">Unidad:</label>
-              <input type="text" class="form-control" id="editProductUnitMp" name="editProductUnitMp" required>
+              <select class="form-control" id="editProductUnitMpSelect" name="editProductUnitMpSelect" required>
+                <option value="METROS">METROS</option>
+                <option value="UNIDAD">UNIDAD</option>
+                <option value="CENTIMETROS">CENTIMETROS</option>
+                <option value="OTRO">Otro</option>
+              </select>
+              <input type="text" class="form-control mt-2" id="editProductUnitMp" name="editProductUnitMp" placeholder="Especificar unidad" style="display: none;">
             </div>
+
+            <script>
+              document.getElementById('editProductUnitMpSelect').addEventListener('change', function() {
+                var select = this;
+                var input = document.getElementById('editProductUnitMp');
+                if (select.value === 'OTRO') {
+                  input.style.display = 'block';
+                  input.required = true;
+                  input.value = ''; // Clear the input value
+                } else {
+                  input.style.display = 'none';
+                  input.required = false;
+                  input.value = select.value; // Set the input value to the selected option
+                }
+              });
+
+              // Initialize the form based on the existing value
+              window.addEventListener('load', function() {
+                var select = document.getElementById('editProductUnitMpSelect');
+                var input = document.getElementById('editProductUnitMp');
+                var currentValue = input.value;
+
+                if (currentValue !== 'METROS' && currentValue !== 'UNIDAD' && currentValue !== 'CENTIMETROS') {
+                  select.value = 'OTRO';
+                  input.style.display = 'block';
+                  input.required = true;
+                } else {
+                  select.value = currentValue;
+                  input.style.display = 'none';
+                  input.required = false;
+                }
+              });
+            </script>
 
             <!-- Precio -->
             <div class="form-group">

@@ -17,8 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
           <th scope="col">#</th>
           <th scope="col">Nombre</th>
           <th scope="col">Código</th>
+          
+          <th scope="col">Stock</th>
           <th scope="col">Unidad Medida</th>
-          <th scope="col">Cantidad</th>
+          <th scope="col">Precio Uni</th>
           <th scope="col">Total S/.</th>
           </tr>
       `);
@@ -33,10 +35,12 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       { data: "nombreMprimaAlma" },
       { data: "codigoMprimaAlma" },
-      { data: "unidadMprimaAlma" },
+     
       { data: "cantidadMprimaAlma" },
+      { data: "unidadMprimaAlma" },
+      { data: "precioUnit" },
       {
-        data: "totalProdAlmaMprima",
+        data: "totalMprimaAlma",
         render: function (data, type, row) {
           return "S/ " + data;
         },
