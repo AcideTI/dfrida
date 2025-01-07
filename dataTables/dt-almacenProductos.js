@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
           <th scope="col">Nombre</th>
           <th scope="col">Código</th>
           <th scope="col">Unidad Medida</th>
-          <th scope="col">Cantidad</th>
+          <th scope="col">Stock</th>
+          <th scope="col">Precio Uni</th>
           <th scope="col">Total S/.</th>
           </tr>
       `);
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { data: "codigoProdAlma" },
       { data: "unidadProdAlma" },
       { data: "cantidadProdAlma" },
+      { data: "precioUnit" },
       {
         data: "totalProdAlma",
         render: function (data, type, row) {
