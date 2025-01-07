@@ -2,7 +2,7 @@
 
 ///hostin local
 
-class Conexion
+/* class Conexion
 {
   static public function conn()
   {
@@ -10,16 +10,17 @@ class Conexion
     $link->exec("set names utf8");
     return $link;
   }
-}
+} */
 
-//hostinguer
+//conexcion Cpanel
 
-/* class Conexion
+class Conexion
 {
   static public function conn()
   {
-    $link = new PDO("mysql:host=localhost;dbname=pruebasbetaacide_admin_dfrida", "pruebasbetaacide_admin_dfrida", "xb{kk[6{uMrF");
+    $link = new PDO("mysql:host=localhost;dbname=pruebasbetaacide_dfrida", "pruebasbetaacide_admin_dfrida", "W(^bm#y..?gJ");
     $link->exec("set names utf8");
     return $link;
   }
-} */
+} 
+
